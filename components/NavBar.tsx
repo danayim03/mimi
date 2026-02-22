@@ -8,7 +8,7 @@ const NavBar = () => {
         <header className="w-full absolute z-10">
             <nav className="max-width flex-between padding-x padding-y bg-transparent">
                 <Link href="/" className="text-2xl font-bold text-primary-pink font-libre">
-                    BookHub
+                    BookHub.
                 </Link>
 
                 <button type="button" className="custom-btn min-w-[130px]">
