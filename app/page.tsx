@@ -2,6 +2,7 @@
 // This file is injected into the { children } slot of layout.tsx file.
 import BookCard from "@/components/BookCard";
 import Hero from "@/components/Hero";
+import SearchBar from "@/components/SearchBar";
 
 export default function Home() {
   // dummy data to test grid for BookCard
@@ -17,11 +18,20 @@ export default function Home() {
       {/* Main Content Section */}
       <Hero />
 
-      {/* Grid Section */}
-      <section className="padding-x padding-y">
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full">
+      {/* Search Bar Section */}
+      <div className="mt-12 padding-x padding-y max-width" id="discover">
+        <div className="flex flex-col items-start justify-start gap-y-2.5">
+          <h1 className="text-4xl font-bold font-libre text-primary-pink">Book Catalogue</h1>
+          <p className="font-sans text-primary-pink">Explore books you might like</p>
+        </div>
+        <div className="mb-12">
+          <SearchBar />
+        </div>
+
+        {/* Grid Section */}
+        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
           {allBooks.map((book) => (
-            <BookCard 
+            <BookCard
               key={book.title}
               title={book.title}
               author={book.author}
@@ -30,7 +40,7 @@ export default function Home() {
             />
           ))}
         </div>
-      </section>
+      </div>
     </main>
   );
 }

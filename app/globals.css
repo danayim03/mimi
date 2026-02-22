@@ -48,7 +48,7 @@
   /* component styles */
   /* container for each book result */
   .book-card {
-    @apply flex flex-col p-6 m-6 justify-center items-start text-primary-plum
+    @apply flex flex-col p-6 justify-center items-start text-primary-plum
           bg-primary-pink rounded-3xl cursor-pointer
           hover:bg-white-100 hover:shadow-xl
           transition-all duration-300;
