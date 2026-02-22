@@ -3,6 +3,7 @@
 import BookCard from "@/components/BookCard";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   // dummy data to test grid for BookCard
@@ -40,6 +41,10 @@ export default function Home() {
             />
           ))}
         </div>
+
+        {/* Footer Section */}
+        <Footer />
+
       </div>
     </main>
   );
