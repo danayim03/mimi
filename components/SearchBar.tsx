@@ -4,7 +4,11 @@
 
 import React, { useState } from "react";
 
-const SearchBar = () => {
+interface SearchBarProps {
+    setQuery: (query: string) => void;
+}
+
+const SearchBar = ({ setQuery }: SearchBarProps) => {
     // searchTitle = current value (what user types)
     // setSearchTitle = function to change the value
     // "" = starting value (empty text)
@@ -12,7 +16,7 @@ const SearchBar = () => {
     // function that runs when user submits the form (e = form event)
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault(); // prevents the page from refreshing when user clicks on the search button
-        console.log("Searching for: " , searchTitle);
+        setQuery(searchTitle); // this sends the local text up to page.tsx
     };
 
     return (

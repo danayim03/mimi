@@ -1,5 +1,8 @@
-// page.tsx = unique content for this specific route (the home page).
+// page.tsx = the home page.
 // This file is injected into the { children } slot of layout.tsx file.
+"use client";
+
+import { useState } from "react";
 import BookCard from "@/components/BookCard";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
@@ -14,6 +17,14 @@ export default function Home() {
     { title: "Anna Karenina", author: "Leo Tolstoy", genre: "Classic", year: 1878 },
   ];
 
+  // state to track the search query
+  const [query, setQuery] = useState("");
+
+  // filter the search: check if the book title includes the letters user typed (case-insensitive)
+  const filteredBooks = allBooks.filter((book) =>
+    book.title.toLowerCase().includes(query.toLowerCase())
+  );
+
   return (
     <main className="overflow-hidden">
       {/* Main Content Section */}
@@ -26,21 +37,24 @@ export default function Home() {
           <p className="font-sans text-primary-pink">Explore books you might like</p>
         </div>
         <div className="mb-12">
-          <SearchBar />
+          {/* Pass 'setQuery' to the SearchBar */}
+          <SearchBar setQuery={setQuery}/>
         </div>
 
-        {/* Grid Section */}
-        <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
-          {allBooks.map((book) => (
-            <BookCard
-              key={book.title}
-              title={book.title}
-              author={book.author}
-              genre={book.genre}
-              year={book.year}
-            />
-          ))}
-        </div>
+        <section className="mt-12">
+          {/* Show results or a "Not Found" message */}
+          {filteredBooks.length > 0 ? (
+            <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
+              {filteredBooks.map((book) => (
+                <BookCard key={book.title} {...book} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex justify-center items-center mt-20">
+              <h2 className="text-primary-pink text-xl font-bold">Oops, no results for "{query}"</h2>
+            </div>
+          )}
+        </section>
 
         {/* Footer Section */}
         <Footer />
