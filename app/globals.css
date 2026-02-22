@@ -1,26 +1,69 @@
+/* 1. External Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+/* 2. Tailwind Framework */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 3. The Design System Variables */
+/* theme block = the DNA of the design system */
+@theme {
+  /* Fonts */
+  --font-libre: "Libre Baskerville", serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui;
+
+  /* Colors */
+  --color-black-100: #000000;
+  --color-white-100: #FFFFFF;
+  --color-primary-plum: #670626;
+  --color-primary-pink: #FFBDC5;
+
+  /* Animations for smooth UI transitions*/
+  --animate-fade-in: fade-in 0.5s ease-out;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* 4. Base Styles - Global Defaults */
+/* layer block = decides which CSS rules should be prioritized if there's a conflict */
+@layer base {
+  body {
+    @apply font-sans text-black-100 bg-white-100 antialiased;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1, h2, h3 {
+    @apply font-libre;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* 5. Utility Shortcuts - reusable layout bricks */
+@layer utilities {
+  /* centers content and prevents it from getting wider than 1440px. */
+  .max-width { @apply max-w-[1440px] mx-auto; }
+  /* adds responsive horizontal - left and right- padding. */
+  .padding-x { @apply sm:px-16 px-6; }
+  /* adds vertical padding - top and bottom.*/
+  .padding-y { @apply py-4; }
+  /* centers children items inside a container. */
+  .flex-center { @apply flex items-center justify-center; }
+  /* pushes items to opposite ends. */
+  .flex-between { @apply flex justify-between items-center;}
+
+  /* component styles */
+  /* container for each book result */
+  .book-card {
+    @apply flex flex-col p-6 justify-center items-start text-black-100
+          bg-primary-pink rounded-3xl cursor-pointer
+          hover:bg-white-100 hover:shadow-xl
+          transition-all duration-300;
+  }
+  /* text box where users type the book title */
+  .search-input {
+    @apply w-full h-[48px] pl-12 p-4 bg-primary-pink rounded-full
+          outline-none text-sm border border-transparent
+          focus:border-primary-plum transition-all;
+  }
+  /* primary action button */
+  .custom-btn {
+    @apply flex flex-row relative justify-center items-center py-3 px-6
+          outline-none bg-primary-plum text-white-100 rounded-full
+          hover:opacity-90
+          active:scale-95 transition-all;
+  }
 }
