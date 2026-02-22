@@ -24,7 +24,7 @@
 /* layer block = decides which CSS rules should be prioritized if there's a conflict */
 @layer base {
   body {
-    @apply font-sans text-black-100 bg-white-100 antialiased;
+    @apply font-sans antialiased;
   }
 
   h1, h2, h3 {
@@ -62,7 +62,7 @@
   /* primary action button */
   .custom-btn {
     @apply flex flex-row relative justify-center items-center py-3 px-6
-          outline-none bg-primary-plum text-white-100 rounded-full
+          outline-none bg-primary-pink text-primary-plum rounded-full
           hover:opacity-90
           active:scale-95 transition-all;
   }
