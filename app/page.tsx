@@ -2,28 +2,30 @@
 // This file is injected into the { children } slot of layout.tsx file.
 "use client";
 
-import { useState } from "react";
 import BookCard from "@/components/BookCard";
+import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
 import SearchBar from "@/components/SearchBar";
-import Footer from "@/components/Footer";
+import { fetchBooks } from "@/utils";
+import { useEffect, useState } from "react";
 
 export default function Home() {
-  // dummy data to test grid for BookCard
-  const allBooks = [
-    { title: "Jane Eyre", author: "Charlotte Brontë", genre: "Classic", year: 1847 },
-    { title: "The Picture of Dorian Gray", author: "Oscar Wilde", genre: "Classic", year: 1890 },
-    { title: "Frankenstein", author: "Mary Shelley", genre: "Classic", year: 1818 },
-    { title: "Anna Karenina", author: "Leo Tolstoy", genre: "Classic", year: 1878 },
-  ];
-
-  // state to track the search query
-  const [query, setQuery] = useState("");
-
-  // filter the search: check if the book title includes the letters user typed (case-insensitive)
-  const filteredBooks = allBooks.filter((book) =>
-    book.title.toLowerCase().includes(query.toLowerCase())
-  );
+  // initially there is no book data: []
+  const [books, setBooks] = useState([]);
+  // initial search term is classics
+  const [query, setQuery] = useState("classics");
+  // initially search not done -> not loading -> false
+  const [loading, setLoading] = useState(false);
+  // the search triggered:
+  useEffect(() => {
+    const loadBooks = async () => {
+      setLoading(true); // load book data begins
+      const data = await fetchBooks(query); // use tool from utils to fetch book data
+      setBooks(data); // data loaded
+      setLoading(false); // load finished
+    };
+    loadBooks(); // trigger search
+  }, [query]);
 
   return (
     <main className="overflow-hidden">
@@ -42,24 +44,33 @@ export default function Home() {
         </div>
 
         <section className="mt-12">
-          {/* Show results or a "Not Found" message */}
-          {filteredBooks.length > 0 ? (
-            <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
-              {filteredBooks.map((book) => (
-                <BookCard key={book.title} {...book} />
+          {loading ? (
+            /* Loading State */
+            <div className="flex justify-center items-center mt-20">
+              <h2 className="text-primary-pink text-xl font-bold animate-pulse">
+                Searching the library...
+              </h2>
+            </div>
+          ) : books.length > 0 ? (
+            /* The Grid - now using the 'books' state from the API */
+            <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-x-10 gap-y-10">
+              {books.map((book: any, index: number) => (
+                /* Use index along with title in case two or more books share a title */
+                <BookCard key={`${book.title}-${index}`} {...book} />
               ))}
             </div>
           ) : (
+            /* Empty State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-primary-pink text-xl font-bold">Oops, no results for "{query}"</h2>
+              <h2 className="text-primary-pink text-xl font-bold">
+                Oops, no results for "{query}"
+              </h2>
             </div>
           )}
         </section>
-
-        {/* Footer Section */}
-        <Footer />
-
       </div>
+
+      <Footer />
     </main>
   );
 }
