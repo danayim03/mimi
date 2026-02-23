@@ -11,18 +11,14 @@ interface BookProps {
 const BookCard = ({ title, author, genre, year }: BookProps) => {
     return (
         <div className="book-card">
-            <div className="relative w-full h-40 rounded-xl flex-center">
-                {/* will add book images later. for now, placeholder. */}
-                <span className="text-primary-pink font-bold text-4xl">
+            <div className="relative w-full h-40 rounded-xl flex items-start justify-start">
+                <span className="font-bold text-4xl line-clamp-3">
                     {title}
                 </span>
             </div>
 
             <div className="flex flex-col gap-2">
-                <h2 className="text-xl font-bold">
-                    {title}
-                </h2>
-                <p className="text-sm">
+                <p className="text-sm text-primary-plum">
                     By {author}
                 </p>
             </div>

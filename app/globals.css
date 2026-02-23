@@ -13,6 +13,7 @@
   /* Colors */
   --color-black-100: #000000;
   --color-white-100: #FFFFFF;
+  --color-primary-green: #123622;
   --color-primary-plum: #670626;
   --color-primary-pink: #FFBDC5;
 
@@ -50,7 +51,7 @@
   .book-card {
     @apply flex flex-col p-6 justify-center items-start text-primary-plum
           bg-primary-pink rounded-3xl cursor-pointer
-          hover:bg-white-100 hover:shadow-xl
+          hover:bg-white-100 hover:text-primary-pink hover:shadow-xl
           transition-all duration-300;
   }
   /* text box where users type the book title */
