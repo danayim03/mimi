@@ -21,6 +21,7 @@ export async function fetchBooks(query: string) {
             author: book.volumeInfo.authors?.[0] || "Unknown Author",
             genre: book.volumeInfo.categories?.[0] || "Fiction",
             year: book.volumeInfo.publishedDate?.split("-")[0] || "N/A",
+            description: book.volumeInfo.description || "No description available.",
             image: book.volumeInfo.imageLinks?.thumbnail || "",
         }));
     } catch (error) {
