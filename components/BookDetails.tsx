@@ -1,7 +1,9 @@
 // BookDetails.tsx = detail view of a BookCard & add to library button
 "use client";
 // import for Clerk
-import { useAuth } from "@clerk/nextjs";
+import { supabase } from "@/utils/supabase";
+import { useUser } from "@clerk/nextjs";
+import { useState } from "react";
 
 interface BookDetailsProps {
     isOpen: boolean;
@@ -17,12 +19,43 @@ interface BookDetailsProps {
 }
 
 const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
+    const { isLoaded, isSignedIn, user } = useUser();
+    const [isAdding, setIsAdding] = useState(false);
     // if not opened, don't show anything
     if (!isOpen) return null;
 
-    const { isSignedIn } = useAuth();
+    const handleAddToLibrary = async () => {
+        if (!user) return;
+
+        setIsAdding(true); // start adding book to library
+
+        try {
+            const { error } = await supabase
+                .from('books') // supabase database table name
+                .insert([
+                    {
+                        user_id: user.id, // clerk's unique ID
+                        title: book.title,
+                        author: book.author,
+                        genre: book.genre,
+                        year: String(book.year),
+                        image: book.image,
+                        description: book.description
+                    }
+                ]);
+            if (error) throw error;
+            alert("Added to your library 🕯️🖤");
+            closeModal();
+        } catch (error: any) {
+            console.error("Error: ", error.message);
+            alert("An unfortunate event has occured and the book could not be added to your library.")
+        } finally {
+            setIsAdding(false); // added to library so finish adding
+        }
+    };
 
     return (
+        /* Blurred Background */
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs p-4">
             <div className="bg-primary-green rounded-3xl max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full max-h-[90vh] overflow-y-auto relative p-8">
                 {/* Close Button */}
@@ -63,11 +96,11 @@ const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
                                 </span>
                                 {/* Add Button */}
                                 <button
-                                    disabled={!isSignedIn}
-                                    onClick={() => console.log("Adding to your library...")}
+                                    disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
+                                    onClick={handleAddToLibrary}
                                     className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
                                 >
-                                    {isSignedIn ? "Add to My Library" : "Sign in to add books"}
+                                    {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
                                 </button>
                             </div>
                         </div>
@@ -78,9 +111,10 @@ const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
                                 Description
                             </h3>
                             <p className="text-primary-pink leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                {book.description}
+                                {book.description || "No description available for this book."}
                             </p>
                         </div>
+
                     </div>
                 </div>
             </div>
