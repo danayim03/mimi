@@ -1,5 +1,7 @@
-// BookDetails.tsx = detail view of a BookCard
+// BookDetails.tsx = detail view of a BookCard & add to library button
 "use client";
+// import for Clerk
+import { useAuth } from "@clerk/nextjs";
 
 interface BookDetailsProps {
     isOpen: boolean;
@@ -17,6 +19,8 @@ interface BookDetailsProps {
 const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
     // if not opened, don't show anything
     if (!isOpen) return null;
+
+    const { isSignedIn } = useAuth();
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs p-4">
@@ -59,10 +63,11 @@ const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
                                 </span>
                                 {/* Add Button */}
                                 <button
+                                    disabled={!isSignedIn}
                                     onClick={() => console.log("Adding to your library...")}
                                     className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
                                 >
-                                    Add to My Library
+                                    {isSignedIn ? "Add to My Library" : "Sign in to add books"}
                                 </button>
                             </div>
                         </div>

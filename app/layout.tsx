@@ -1,6 +1,9 @@
-// layout.tsx = Overall layout structure and global styles
+// layout.tsx = Overall layout structure and global styles wrapped around ClerkProvider
 import NavBar from "../components/NavBar";
 import "./globals.css";
+// imports for Clerk
+import { ClerkProvider } from '@clerk/nextjs'
+
 // search engine optimization (SEO, aka the metadata)
 export const metadata = {
   title: "BookHub",
@@ -9,11 +12,13 @@ export const metadata = {
 
 export default function RootLayout({ children, }: { children: React.ReactNode; }) {
   return (
-    <html lang="en">
-      <body className="relative bg-primary-plum antialiased">
-        <NavBar />
-        {children}
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="relative bg-primary-plum antialiased">
+          <NavBar />
+          {children}
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

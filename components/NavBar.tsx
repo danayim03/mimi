@@ -2,18 +2,46 @@
 "use client";
 
 import Link from "next/link";
+import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 
 const NavBar = () => {
+    // grab user's data
+    const { user, isLoaded } = useUser();
+    // determine which name to show on library
+    const displayName = user?.username || user?.firstName || "My";
+
     return (
         <header className="w-full absolute z-10">
             <nav className="max-width flex-between padding-x padding-y bg-transparent">
+
                 <Link href="/" className="text-2xl font-bold text-primary-pink font-libre">
                     BookHub.
                 </Link>
 
-                <button type="button" className="custom-btn min-w-[130px]">
-                    Sign In
-                </button>
+                <div>
+                    {/* If the user is not signed in, show this */}
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <button type="button" className="custom-btn min-w-[130px]">
+                                Sign In
+                            </button>
+                        </SignInButton>
+                    </SignedOut>
+                    {/* If the user is signed in, show this */}
+                    <SignedIn>
+                        <div className="flex items-center gap-4">
+                            {/* Library link */}
+                            <Link
+                                href="/my-library"
+                                className="text-sm text-primary-pink font-bold"
+                            >
+                                {isLoaded ? `${displayName}'s Library` : "My Library"}
+                            </Link>
+                            <UserButton afterSignOutUrl="/" />
+                        </div>
+                    </SignedIn>
+                </div>
+                
             </nav>
         </header>
     );
