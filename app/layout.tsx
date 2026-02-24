@@ -2,7 +2,7 @@
 import NavBar from "../components/NavBar";
 import "./globals.css";
 // imports for Clerk
-import { ClerkProvider } from '@clerk/nextjs'
+import { ClerkProvider } from '@clerk/nextjs';
 
 // search engine optimization (SEO, aka the metadata)
 export const metadata = {
@@ -16,7 +16,9 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
       <html lang="en">
         <body className="relative bg-primary-plum antialiased">
           <NavBar />
-          {children}
+          <main className="pt-20">
+            {children}
+          </main>
         </body>
       </html>
     </ClerkProvider>

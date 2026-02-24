@@ -11,7 +11,7 @@ const NavBar = () => {
     const displayName = user?.username || user?.firstName || "My";
 
     return (
-        <header className="w-full absolute z-10">
+        <header className="w-full fixed top-0 z-10">
             <nav className="max-width flex-between padding-x padding-y bg-transparent">
 
                 <Link href="/" className="text-2xl font-bold text-primary-pink font-libre">
