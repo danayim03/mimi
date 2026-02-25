@@ -1,8 +1,8 @@
 // NavBar.tsx = Navigation bar component
 "use client";
 
-import Link from "next/link";
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
 
 const NavBar = () => {
     // grab user's data
@@ -12,7 +12,7 @@ const NavBar = () => {
 
     return (
         <header className="w-full fixed top-0 z-10">
-            <nav className="max-width flex-between padding-x padding-y bg-transparent">
+            <nav className="max-width flex-between padding-x padding-y bg-primary-plum">
 
                 <Link href="/" className="text-2xl font-bold text-primary-pink font-libre">
                     BookHub.

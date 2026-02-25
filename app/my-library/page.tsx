@@ -36,7 +36,7 @@ const MyLibrary = () => {
 
     if (!isLoaded || loading) return (
         <div className="flex items-center justify-center min-h-screen">
-            <h2 className="text-primary-pink text-xl font-bold animate-pulse">Loading your collection... 🕯️</h2>
+            <h2 className="text-primary-pink font-sans text-xl font-bold animate-pulse">Loading your collection...</h2>
         </div>
     );
 
