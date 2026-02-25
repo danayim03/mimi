@@ -9,21 +9,23 @@ interface BookDetailsProps {
     isOpen: boolean;
     closeModal: () => void;
     book: {
+        id?: string; // supabase ID for fetching a specific database row.
         title: string;
         author: string;
         genre: string;
         year: number;
         description: string;
         image: string;
-    }
+    };
+    isLibraryView?: boolean; // used for deleting books from my library page.
 }
 
-const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
+const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsProps) => {
     const { isLoaded, isSignedIn, user } = useUser();
     const [isAdding, setIsAdding] = useState(false);
     // if not opened, don't show anything
     if (!isOpen) return null;
-
+    // function for adding to library
     const handleAddToLibrary = async () => {
         if (!user) return;
 
@@ -51,6 +53,30 @@ const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
             alert("An unfortunate event has occured and the book could not be added to your library.")
         } finally {
             setIsAdding(false); // added to library so finish adding
+        }
+    };
+
+    // function for deleting books from library
+    const handleDeleteFromLibrary = async () => {
+        if (!book.id) {
+            alert("Error: Book ID not found.");
+            return;
+        }
+        
+        setIsAdding(true);
+        try {
+            const { error } = await supabase
+                .from('books')
+                .delete()
+                .eq('id', book.id);
+            if (error) throw error;
+            alert("Removed the book from your collection.");
+            closeModal();
+            window.location.reload(); // refresh the page to show the book is deleted.
+        } catch (error: any) {
+            alert("Error occured while removing the book.");
+        } finally {
+            setIsAdding(false);
         }
     };
 
@@ -94,14 +120,27 @@ const BookDetails = ({ isOpen, closeModal, book }: BookDetailsProps) => {
                                 <span className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.year}
                                 </span>
-                                {/* Add Button */}
-                                <button
-                                    disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
-                                    onClick={handleAddToLibrary}
-                                    className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
-                                >
-                                    {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
-                                </button>
+                                {/* Add and Delete Button Based On isLibraryView prop */}
+                                <div>
+                                    {isLibraryView ? (
+                                        // Delete Button
+                                        <button
+                                            onClick={handleDeleteFromLibrary}
+                                            className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
+                                        >
+                                            {isAdding ? "Removing..." : "Remove from Library"}
+                                        </button>
+                                    ) : (
+                                        // Add Button
+                                        <button
+                                            disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
+                                            onClick={handleAddToLibrary}
+                                            className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
+                                        >
+                                            {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
                         </div>
 

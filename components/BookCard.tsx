@@ -11,10 +11,11 @@ interface BookProps {
     year: number;
     description: string;
     image: string;
+    isLibraryView?: boolean;
 }
 
 const BookCard = (book: BookProps) => {
-    const { title, author, genre, year, description, image } = book;
+    const { title, author, genre, year, description, image, isLibraryView } = book;
     const [ isOpen, setIsOpen ] = useState(false);
 
     return (
@@ -47,6 +48,7 @@ const BookCard = (book: BookProps) => {
                 isOpen={isOpen}
                 closeModal={() => setIsOpen(false)}
                 book={book}
+                isLibraryView={isLibraryView}
             />
         </>
     );

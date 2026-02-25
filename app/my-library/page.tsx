@@ -36,7 +36,9 @@ const MyLibrary = () => {
 
     if (!isLoaded || loading) return (
         <div className="flex items-center justify-center min-h-screen">
-            <h2 className="text-primary-pink font-sans text-xl font-bold animate-pulse">Loading your collection...</h2>
+            <h2 className="text-primary-pink font-sans text-xl font-bold animate-pulse">
+                Loading your collection...
+            </h2>
         </div>
     );
 
@@ -45,14 +47,14 @@ const MyLibrary = () => {
             {books.length > 0 ? (
                 <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
                     {books.map((book) => (
-                        <BookCard key={book.id} {...book}/>
+                        <BookCard key={book.id} {...book} isLibraryView={true} />
                     ))}
                 </div>
             ) : (
-                <div className="text-center mt-20">
-                    <p className="text-xl text-black">
+                <div className="flex items-center justify-center min-h-screen">
+                    <h2 className="text-primary-pink font-sans text-xl font-bold">
                         Your library is currently empty.
-                    </p>
+                    </h2>
                 </div>
             )}
         </main>
