@@ -15,7 +15,7 @@ const Hero = () => {
         <div className="flex xl:flex-row flex-col gap-5 relative z-0 max-width">
             <div className="pt-36 padding-x flex-1">
                 <h1 className="text-primary-pink text-[50px] sm:text-[64px] font-bold font-libre leading-[1.1]">
-                    Personalize your reading experience.
+                    Personalize your library with BookHub.
                 </h1>
 
                 <p className="text-[20px] text-primary-pink font-sans mt-5">

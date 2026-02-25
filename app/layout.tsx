@@ -1,5 +1,6 @@
 // layout.tsx = Overall layout structure and global styles wrapped around ClerkProvider
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
 import "./globals.css";
 // imports for Clerk
 import { ClerkProvider } from '@clerk/nextjs';
@@ -19,6 +20,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
           <main className="pt-20">
             {children}
           </main>
+          <Footer />
         </body>
       </html>
     </ClerkProvider>

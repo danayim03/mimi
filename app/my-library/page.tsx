@@ -11,6 +11,24 @@ const MyLibrary = () => {
     const [books, setBooks] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const handleProgressUpdate = async (id: string, newProgress: number) => {
+        try {
+            const { error } = await supabase
+                .from('books')
+                .update({ progress: newProgress })
+                .eq('id', id);
+            if (error) throw error;
+            // progress bar UI update
+            setBooks((prevBooks) =>
+                prevBooks.map((book) =>
+                    book.id === id ? {...book, progress: newProgress} : book
+                )
+            );
+        } catch (error) {
+            alert("Could not update progress. Please try again.")
+        }
+    };
+
     useEffect(() => {
         const fetchSavedBooks = async () => {
             if (!user) return;
@@ -47,7 +65,7 @@ const MyLibrary = () => {
             {books.length > 0 ? (
                 <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-10">
                     {books.map((book) => (
-                        <BookCard key={book.id} {...book} isLibraryView={true} />
+                        <BookCard key={book.id} {...book} isLibraryView={true} onProgressUpdate={handleProgressUpdate} />
                     ))}
                 </div>
             ) : (
