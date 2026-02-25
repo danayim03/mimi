@@ -98,7 +98,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                         {book.image ? (
                             <img src={book.image} alt={book.title} className="h-64 object-contain" />
                         ) : (
-                            <span className="text-6xl font-bold text-primary-pink">{book.title}</span>
+                            <img src="/default.png" alt="no book image found" className="h-64 object-contain" />
                         )}
                     </div>
 
