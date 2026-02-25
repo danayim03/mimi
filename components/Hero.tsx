@@ -13,13 +13,13 @@ const Hero = () => {
 
     return (
         <div className="flex xl:flex-row flex-col gap-5 relative z-0 max-width">
-            <div className="pt-36 padding-x flex-1">
+            <div className="pt-10 padding-x flex-1">
                 <h1 className="text-primary-pink text-[50px] sm:text-[64px] font-bold font-libre leading-[1.1]">
-                    Personalize your library with BookHub.
+                    Welcome Back, Fellow Pioneer.
                 </h1>
 
                 <p className="text-[20px] text-primary-pink font-sans mt-5">
-                    The modern sanctuary for readers to track, discover, and organize their literary world.
+                    Are you ready to track, discover, and organize your literary world?
                 </p>
 
                 <button onClick={scrollToSection} className="custom-btn mt-10 min-w-[170px]">
@@ -29,9 +29,9 @@ const Hero = () => {
 
             <div className="xl:flex-[1.5] flex justify-end items-end w-full xl:h-screen">
                 <Image 
-                    src="/hero.png"
-                    width={450}
-                    height={450}
+                    src="/logo.png"
+                    width={600}
+                    height={600}
                     alt="hero image"
                 />
             </div>
