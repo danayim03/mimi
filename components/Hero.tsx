@@ -3,6 +3,14 @@
 import Image from "next/image";
 
 const Hero = () => {
+    // scrollToSection is defined here because it scrolls specifically to book catalogue section
+    const scrollToSection = () => {
+        const element = document.getElementById('book-catalogue');
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <div className="flex xl:flex-row flex-col gap-5 relative z-0 max-width">
             <div className="pt-36 padding-x flex-1">
@@ -14,8 +22,8 @@ const Hero = () => {
                     The modern sanctuary for readers to track, discover, and organize their literary world.
                 </p>
 
-                <button className="custom-btn mt-10 min-w-[170px]">
-                    Explore Books
+                <button onClick={scrollToSection} className="custom-btn mt-10 min-w-[170px]">
+                    Explore Library
                 </button>
             </div>
 
