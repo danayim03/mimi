@@ -10,22 +10,25 @@ import { fetchBooks } from "@/utils";
 import { useEffect, useState } from "react";
 
 export default function Home() {
-  // initially there is no book data: []
   const [books, setBooks] = useState([]);
-  // initial search term is classics
-  const [query, setQuery] = useState("classics");
-  // initially search not done -> not loading -> false
+  const [titleQuery, setTitleQuery] = useState("classics");
+  const [authorQuery, setAuthorQuery] = useState("");
   const [loading, setLoading] = useState(false);
-  // the search triggered:
+
   useEffect(() => {
     const loadBooks = async () => {
-      setLoading(true); // load book data begins
-      const data = await fetchBooks(query); // use tool from utils to fetch book data
-      setBooks(data); // data loaded
-      setLoading(false); // load finished
+      setLoading(true);
+      const data = await fetchBooks(titleQuery, authorQuery);
+      setBooks(data);
+      setLoading(false);
     };
-    loadBooks(); // trigger search
-  }, [query]);
+    loadBooks();
+  }, [titleQuery, authorQuery]);
+
+  const handleSearch = (title: string, author: string) => {
+    setTitleQuery(title);
+    setAuthorQuery(author);
+  };
 
   return (
     <main className="overflow-hidden">
@@ -40,7 +43,7 @@ export default function Home() {
         </div>
         <div className="mb-12">
           {/* Pass 'setQuery' to the SearchBar */}
-          <SearchBar setQuery={setQuery}/>
+          <SearchBar onSearch={handleSearch} />
         </div>
 
         <section className="mt-12">
@@ -63,7 +66,7 @@ export default function Home() {
             /* Empty State */
             <div className="flex justify-center items-center mt-20">
               <h2 className="text-primary-pink text-xl font-bold">
-                Oops, no results for "{query}"
+                Oops, no results for "{[titleQuery, authorQuery].filter(Boolean).join(" by ")}"
               </h2>
             </div>
           )}

@@ -1,12 +1,16 @@
 // utils/index.ts = toolbox's tool. 
 // in order to load books in page.tsx, we need a tool to fetch the book data.
 // fetchBooks() function is the tool that does it.
-export async function fetchBooks(query: string) {
-    // get Google Books API key from .env file
+export async function fetchBooks(title: string, author: string) {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY;
-    // build the query: user search + fiction category
-    // use encodeURIComponent to handle spaces and special characters safely (such as space, since query is user input)
-    const safeQuery = encodeURIComponent(`${query} subject:fiction`);
+
+    // build query parts — Google Books supports intitle: and inauthor: filters
+    const parts: string[] = [];
+    if (title)  parts.push(`intitle:${title}`);
+    if (author) parts.push(`inauthor:${author}`);
+    if (!parts.length) parts.push("subject:fiction"); // fallback for empty search
+
+    const safeQuery = encodeURIComponent(parts.join("+"));
     // url template provided via Google Books API doc
     const url = `https://www.googleapis.com/books/v1/volumes?q=${safeQuery}&key=${apiKey}&maxResults=12`;
     // try and catch block
