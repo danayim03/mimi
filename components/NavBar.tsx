@@ -2,7 +2,6 @@
 "use client";
 
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -16,7 +15,7 @@ const NavBar = () => {
             <nav className="max-width flex-between padding-x padding-y bg-primary-plum">
 
                 <Link href="/">
-                    <Image src="/logo.png" alt="BookHub logo" width={40} height={40} />
+                    <p className="font-bonbon text-primary-pink">mimi</p>
                 </Link>
 
                 <div>

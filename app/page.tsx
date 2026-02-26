@@ -49,8 +49,8 @@ export default function Home() {
       {/* Search Bar Section */}
       <div className="mt-12 padding-x padding-y max-width" id="discover">
         <div className="flex flex-col items-start justify-start gap-y-2.5">
-          <h1 id="book-catalogue" className="text-4xl font-bold font-libre text-primary-pink scroll-mt-24">Book Catalogue</h1>
-          <p className="font-sans text-primary-pink">Explore books you might like</p>
+          <h1 id="book-catalogue" className="text-4xl font-bold font-kapakana text-primary-pink scroll-mt-24">Book Catalogue</h1>
+          <p className="font-karrik text-primary-pink">Explore books you might like</p>
         </div>
         <div className="mb-12">
           <SearchBar onSearch={handleSearch} />
@@ -60,7 +60,7 @@ export default function Home() {
           {loading ? (
             /* Loading State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-primary-pink font-sans text-xl font-bold animate-pulse">
+              <h2 className="text-primary-pink font-karrik text-xl font-bold animate-pulse">
                 Searching the library...
               </h2>
             </div>

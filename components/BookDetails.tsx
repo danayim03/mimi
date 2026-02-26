@@ -106,7 +106,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     <div className="flex flex-col gap-4 flex-1">
                         {/* Book Info */}
                         <div>
-                            <h2 className="text-3xl font-bold font-libre text-primary-pink leading-tight">
+                            <h2 className="text-3xl font-bold font-kapakana text-primary-pink leading-tight">
                                 {book.title}
                             </h2>
                             <p className="text-lg text-primary-pink mt-2">
@@ -146,7 +146,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
 
                         {/* Book Description */}
                         <div>
-                            <h3 className="text-lg text-primary-pink font-sans">
+                            <h3 className="text-lg text-primary-pink font-karrik">
                                 Description
                             </h3>
                             <p className="text-primary-pink leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">

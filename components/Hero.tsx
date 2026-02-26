@@ -14,12 +14,12 @@ const Hero = () => {
     return (
         <div className="flex xl:flex-row flex-col gap-5 relative z-0 max-width">
             <div className="pt-10 padding-x flex-1">
-                <h1 className="text-primary-pink text-[50px] sm:text-[64px] font-bold font-libre leading-[1.1]">
-                    Welcome Back, Fellow Pioneer.
+                <h1 className="text-primary-pink text-[50px] sm:text-[64px] font-bold font-bonbon leading-[1.1]">
+                    mimi
                 </h1>
 
-                <p className="text-[20px] text-primary-pink font-sans mt-5">
-                    Are you ready to track, discover, and organize your literary world?
+                <p className="text-[20px] text-primary-pink font-karrik mt-5">
+                    The modern sanctuary to track, discover, and organize your literary world. 
                 </p>
 
                 <button onClick={scrollToSection} className="custom-btn mt-10 min-w-[170px]">

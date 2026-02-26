@@ -3,10 +3,46 @@
 /* 2. Tailwind Framework */
 @import "tailwindcss";
 
-/* 3. The Design System Variables */
+/* 3. Custom Local Fonts */
+@font-face {
+  font-family: 'Kapakana';
+  src: url('/fonts/Kapakana-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bonbon';
+  src: url('/fonts/Bonbon-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Karrik';
+  src: url('/fonts/Karrik-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Karrik';
+  src: url('/fonts/Karrik-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* 4. The Design System Variables */
 /* theme block = the DNA of the design system */
 @theme {
   /* Fonts */
+  --font-bonbon: "Bonbon", cursive;
+  --font-kapakana: "Kapakana", serif;
+  --font-karrik: "Karrik", serif;
   --font-libre: "Libre Baskerville", serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui;
 
@@ -14,26 +50,26 @@
   --color-black-100: #000000;
   --color-white-100: #FFFFFF;
   --color-primary-green: #123622;
-  --color-primary-plum: #670626;
+  --color-primary-plum: #F6FAE9;
   --color-primary-pink: #FFBDC5;
 
   /* Animations for smooth UI transitions*/
   --animate-fade-in: fade-in 0.5s ease-out;
 }
 
-/* 4. Base Styles - Global Defaults */
+/* 5. Base Styles - Global Defaults */
 /* layer block = decides which CSS rules should be prioritized if there's a conflict */
 @layer base {
   body {
-    @apply font-sans antialiased;
+    @apply font-karrik antialiased;
   }
 
   h1, h2, h3 {
-    @apply font-libre;
+    @apply font-kapakana;
   }
 }
 
-/* 5. Utility Shortcuts - reusable layout bricks */
+/* 6. Utility Shortcuts - reusable layout bricks */
 @layer utilities {
   /* centers content and prevents it from getting wider than 1440px. */
   .max-width { @apply max-w-[1440px] mx-auto; }

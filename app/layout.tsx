@@ -7,7 +7,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 
 // search engine optimization (SEO, aka the metadata)
 export const metadata = {
-  title: "Pioneer",
+  title: "mimi",
   description: "The modern sanctuary for readers to track, discover, and organize their literary world.",
 };
 
