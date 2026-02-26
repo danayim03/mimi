@@ -3,11 +3,8 @@
 
 import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
-
 const NavBar = () => {
-    // grab user's data
     const { user, isLoaded } = useUser();
-    // determine which name to show on library
     const displayName = user?.username || user?.firstName || "My";
 
     return (
@@ -30,7 +27,6 @@ const NavBar = () => {
                     {/* If the user is signed in, show this */}
                     <SignedIn>
                         <div className="flex items-center gap-4">
-                            {/* Library link */}
                             <Link
                                 href="/my-library"
                                 className="text-sm text-primary-pink font-bold"

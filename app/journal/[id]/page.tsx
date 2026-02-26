@@ -1,10 +1,10 @@
 // journal/[id]/page.tsx = journal entry page for a specific book
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
 import { supabase } from "@/utils/supabase";
+import { useUser } from "@clerk/nextjs";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface Book {
     id: string;
@@ -31,6 +31,12 @@ const JournalPage = () => {
     });
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
+
+    // Override body background to pink for this page only
+    useEffect(() => {
+        document.body.style.backgroundColor = "#FFBDC5";
+        return () => { document.body.style.backgroundColor = ""; };
+    }, []);
 
     // Fetch book info and existing journal entry
     useEffect(() => {
@@ -68,11 +74,13 @@ const JournalPage = () => {
         if (!user || !id) return;
         setSaving(true);
 
+        const bookId = Number(Array.isArray(id) ? id[0] : id);
+
         // Check if an entry already exists for this book + user
         const { data: existing, error: fetchError } = await supabase
             .from("journals")
             .select("id")
-            .eq("book_id", Number(id))
+            .eq("book_id", bookId)
             .eq("user_id", user.id)
             .single();
 
@@ -84,7 +92,6 @@ const JournalPage = () => {
         let saveError;
 
         if (existing) {
-            // Update existing row
             const { error } = await supabase
                 .from("journals")
                 .update({
@@ -96,11 +103,10 @@ const JournalPage = () => {
                 .eq("id", existing.id);
             saveError = error;
         } else {
-            // Insert new row
             const { error } = await supabase
                 .from("journals")
                 .insert({
-                    book_id: Number(id),
+                    book_id: bookId,
                     user_id: user.id,
                     content: entry.content,
                     rating: entry.rating,
@@ -123,10 +129,11 @@ const JournalPage = () => {
     if (!isLoaded) return null;
 
     return (
-        <div className="min-h-screen padding-x max-width mx-auto py-16">
+        <div className="min-h-screen bg-primary-pink -mt-20 pt-20">
+        <div className="padding-x max-width mx-auto py-16">
             <button
                 onClick={() => router.back()}
-                className="mb-10 text-sm text-primary-pink/60 hover:text-primary-pink transition-colors"
+                className="mb-10 text-sm text-primary-plum/60 hover:text-primary-plum transition-colors"
             >
                 ← back to library
             </button>
@@ -134,30 +141,30 @@ const JournalPage = () => {
             <div className="flex flex-col md:flex-row gap-12">
 
                 {/* Left — Book info + metadata */}
-                <div className="flex flex-col gap-6 md:w-1/3">
-                    <h1 className="font-kapakana font-black text-5xl text-primary-pink leading-tight">
+                <div className="flex flex-col gap-6 md:w-1/2">
+                    <h1 className="font-kapakana font-light font-black text-8xl text-primary-plum leading-tight">
                         {book?.title ?? "Loading..."}
                     </h1>
-                    <p className="font-karrik text-primary-pink/60 text-sm">
+                    <p className="font-karrik text-primary-plum/60 text-sm">
                         by {book?.author}
                     </p>
 
                     {/* Finished date */}
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs uppercase tracking-widest text-primary-pink/50 font-karrik">
+                        <label className="text-xs uppercase tracking-widest text-primary-plum/50 font-karrik">
                             Date Completed
                         </label>
                         <input
                             type="date"
                             value={entry.finished_date}
                             onChange={(e) => setEntry({ ...entry, finished_date: e.target.value })}
-                            className="bg-transparent border-b border-primary-pink/30 text-primary-pink font-karrik text-sm py-1 outline-none focus:border-primary-pink transition-colors"
+                            className="bg-transparent border-b border-primary-plum/30 text-primary-plum font-karrik text-sm py-1 outline-none focus:border-primary-plum transition-colors"
                         />
                     </div>
 
                     {/* Rating */}
                     <div className="flex flex-col gap-2">
-                        <label className="text-xs uppercase tracking-widest text-primary-pink/50 font-karrik">
+                        <label className="text-xs uppercase tracking-widest text-primary-plum/50 font-karrik">
                             Rating
                         </label>
                         <div className="flex gap-2">
@@ -179,8 +186,8 @@ const JournalPage = () => {
                 </div>
 
                 {/* Right — Journal entry */}
-                <div className="flex flex-col gap-4 md:flex-1">
-                    <label className="text-xs uppercase tracking-widest text-primary-pink/50 font-karrik">
+                <div className="flex flex-col gap-4 md:w-1/2">
+                    <label className="text-xs uppercase tracking-widest text-primary-plum font-karrik">
                         Your Thoughts
                     </label>
                     <textarea
@@ -188,7 +195,7 @@ const JournalPage = () => {
                         onChange={(e) => setEntry({ ...entry, content: e.target.value })}
                         placeholder="Write your thoughts on this book..."
                         rows={16}
-                        className="w-full bg-transparent border border-primary-pink/20 rounded-2xl p-6 text-primary-pink font-karrik text-sm resize-none outline-none focus:border-primary-pink/50 transition-colors placeholder:text-primary-pink/20"
+                        className="w-full bg-primary-plum border p-6 text-black font-karrik text-sm resize-none outline-none transition-colors placeholder:text-primary-plum/20"
                     />
                     <button
                         onClick={handleSave}
@@ -200,6 +207,7 @@ const JournalPage = () => {
                 </div>
 
             </div>
+        </div>
         </div>
     );
 };
