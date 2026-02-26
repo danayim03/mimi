@@ -49,7 +49,7 @@ export default function Home() {
       {/* Search Bar Section */}
       <div className="mt-12 padding-x padding-y max-width" id="discover">
         <div className="flex flex-col items-start justify-start gap-y-2.5">
-          <h1 id="book-catalogue" className="text-4xl font-bold font-kapakana text-primary-pink scroll-mt-24">Book Catalogue</h1>
+          <h1 id="book-catalogue" className="text-9xl font-bold font-kapakana font-light text-primary-pink scroll-mt-24">Book Catalogue</h1>
           <p className="font-karrik text-primary-pink">Explore books you might like</p>
         </div>
         <div className="mb-12">

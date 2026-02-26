@@ -11,9 +11,9 @@ const NavBar = () => {
         <header className="w-full fixed top-0 z-10">
             <nav className="max-width flex-between padding-x padding-y bg-primary-white">
 
-                <Link href="/">
+                <a href="/">
                     <p className="font-bonbon text-primary-pink">mimi</p>
-                </Link>
+                </a>
 
                 <div>
                     {/* If the user is not signed in, show this */}
