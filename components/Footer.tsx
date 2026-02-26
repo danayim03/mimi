@@ -7,8 +7,8 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
     const pathname = usePathname();
     const isJournal = pathname.startsWith("/journal");
-    const textColor = isJournal ? "text-primary-plum" : "text-primary-pink";
-    const borderColor = isJournal ? "border-primary-plum" : "border-primary-pink";
+    const textColor = isJournal ? "text-primary-white" : "text-primary-pink";
+    const borderColor = isJournal ? "border-primary-white" : "border-primary-pink";
 
     return (
         <footer className={`flex flex-col mt-5 border-t ${borderColor}`}>

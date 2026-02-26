@@ -1,8 +1,8 @@
 // BookCard.tsx = A reusable card that displays individual book details.
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import BookDetails from "./BookDetails";
 
 interface BookProps {
@@ -51,7 +51,7 @@ const BookCard = (book: BookProps) => {
                 </div>
 
                 <div className="flex flex-col gap-2 w-full">
-                    <p className="text-sm text-primary-plum group-hover:text-primary-pink transition-colors">By {author}</p>
+                    <p className="text-sm text-primary-white group-hover:text-primary-pink transition-colors">By {author}</p>
 
                     {/* Progress + Journal row — library view only */}
                     {isLibraryView && (
@@ -62,7 +62,7 @@ const BookCard = (book: BookProps) => {
                             {/* Journal */}
                             <button
                                 onClick={() => router.push(`/journal/${id}`)}
-                                className="text-[10px] font-bold text-primary-plum group-hover:text-primary-pink hover:scale-110 transition-all px-1 cursor-pointer"
+                                className="text-[10px] font-bold text-primary-white group-hover:text-primary-pink hover:scale-110 transition-all px-1 cursor-pointer"
                             >
                                 journal
                             </button>
@@ -77,19 +77,19 @@ const BookCard = (book: BookProps) => {
                                         onChange={(e) => setTempProgress(Number(e.target.value))}
                                         onKeyDown={handleKeyDown}
                                         onBlur={() => setIsEditing(false)}
-                                        className="w-10 bg-primary-plum text-primary-pink text-[10px] font-bold rounded text-center outline-none"
+                                        className="w-10 bg-primary-white text-primary-pink text-[10px] font-bold rounded text-center outline-none"
                                     />
                                 ) : (
                                     <span
                                         onClick={() => setIsEditing(true)}
-                                        className="text-[10px] font-bold text-primary-plum group-hover:text-primary-pink transition-colors hover:scale-110 px-1 cursor-pointer"
+                                        className="text-[10px] font-bold text-primary-white group-hover:text-primary-pink transition-colors hover:scale-110 px-1 cursor-pointer"
                                     >
                                         {progress}%
                                     </span>
                                 )}
                                 <div className="w-12 h-1.5 bg-white rounded-full overflow-hidden">
                                     <div
-                                        className="h-full bg-primary-plum group-hover:bg-primary-pink transition-all duration-500"
+                                        className="h-full bg-primary-white group-hover:bg-primary-pink transition-all duration-500"
                                         style={{ width: `${progress}%` }}
                                     />
                                 </div>
@@ -99,8 +99,8 @@ const BookCard = (book: BookProps) => {
                 </div>
 
                 <div className="mt-4 flex flex-between w-full text-sm font-bold uppercase tracking-widest">
-                    <span className="text-primary-plum group-hover:text-primary-pink transition-colors">{genre}</span>
-                    <span className="text-primary-plum group-hover:text-primary-pink transition-colors">{year}</span>
+                    <span className="text-primary-white group-hover:text-primary-pink transition-colors">{genre}</span>
+                    <span className="text-primary-white group-hover:text-primary-pink transition-colors">{year}</span>
                 </div>
             </div>
 

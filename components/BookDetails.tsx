@@ -87,7 +87,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                 {/* Close Button */}
                 <button
                     onClick={closeModal}
-                    className="absolute top-4 right-4 p-2 bg-primary-plum text-primary-pink rounded-full transition hover:bg-primary-pink hover:text-primary-plum"
+                    className="absolute top-4 right-4 p-2 bg-primary-white text-primary-pink rounded-full transition hover:bg-primary-pink hover:text-primary-white"
                 >
                     x
                 </button>
@@ -114,10 +114,10 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                             </p>
 
                             <div className="flex gap-4 mt-4">
-                                <span className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.genre}
                                 </span>
-                                <span className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.year}
                                 </span>
                                 {/* Add and Delete Button Based On isLibraryView prop */}
@@ -126,7 +126,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         // Delete Button
                                         <button
                                             onClick={handleDeleteFromLibrary}
-                                            className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
+                                            className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-white"
                                         >
                                             {isAdding ? "Removing..." : "Remove from Library"}
                                         </button>
@@ -135,7 +135,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         <button
                                             disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
                                             onClick={handleAddToLibrary}
-                                            className="bg-primary-plum text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-plum"
+                                            className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-white"
                                         >
                                             {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
                                         </button>

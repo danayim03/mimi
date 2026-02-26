@@ -50,7 +50,7 @@
   --color-black-100: #000000;
   --color-white-100: #FFFFFF;
   --color-primary-green: #123622;
-  --color-primary-plum: #F6FAE9;
+  --color-primary-white: #F6FAE9;
   --color-primary-pink: #FFBDC5;
 
   /* Animations for smooth UI transitions*/
@@ -85,21 +85,21 @@
   /* component styles */
   /* container for each book result */
   .book-card {
-    @apply flex flex-col p-6 justify-center items-start text-primary-plum
+    @apply flex flex-col p-6 justify-center items-start text-primary-white
           bg-primary-pink rounded-3xl cursor-pointer
-          hover:bg-white-100 hover:text-primary-pink hover:shadow-xl
+          hover:bg-primary-green hover:text-primary-pink hover:shadow-xl
           transition-all duration-300;
   }
   /* text box where users type the book title */
   .search-input {
     @apply w-full h-[48px] pl-12 p-4 bg-primary-pink rounded-full
           outline-none text-sm border border-transparent
-          focus:border-primary-plum transition-all;
+          focus:border-primary-white transition-all;
   }
   /* primary action button */
   .custom-btn {
     @apply flex flex-row relative justify-center items-center py-3 px-6
-          outline-none bg-primary-pink text-primary-plum rounded-full
+          outline-none bg-primary-pink text-primary-white rounded-full
           hover:opacity-90
           active:scale-95 transition-all;
   }

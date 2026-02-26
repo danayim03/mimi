@@ -9,7 +9,7 @@ const NavBar = () => {
 
     return (
         <header className="w-full fixed top-0 z-10">
-            <nav className="max-width flex-between padding-x padding-y bg-primary-plum">
+            <nav className="max-width flex-between padding-x padding-y bg-primary-white">
 
                 <Link href="/">
                     <p className="font-bonbon text-primary-pink">mimi</p>
