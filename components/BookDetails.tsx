@@ -83,7 +83,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
     return (
         /* Blurred Background */
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs p-4">
-            <div className="bg-primary-green rounded-3xl max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full max-h-[90vh] overflow-y-auto relative p-8">
+            <div className="bg-primary-red rounded-3xl max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full max-h-[90vh] overflow-y-auto relative p-8">
                 {/* Close Button */}
                 <button
                     onClick={closeModal}

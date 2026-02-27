@@ -51,7 +51,7 @@ const BookCard = (book: BookProps) => {
                 </div>
 
                 <div className="flex flex-col gap-2 w-full">
-                    <p className="text-sm text-black group-hover:text-black transition-colors">By {author}</p>
+                    <p className="text-sm text-black group-hover:text-primary-pink transition-colors">By {author}</p>
 
                     {/* Progress + Journal row — library view only */}
                     {isLibraryView && (
@@ -62,9 +62,9 @@ const BookCard = (book: BookProps) => {
                             {/* Journal */}
                             <button
                                 onClick={() => router.push(`/journal/${id}`)}
-                                className="text-[10px] font-bold text-black group-hover:text-black hover:scale-110 transition-all px-1 cursor-pointer"
+                                className="text-sm text-black group-hover:text-primary-pink hover:scale-110 transition-all px-1 cursor-pointer"
                             >
-                                journal
+                                Journal
                             </button>
 
                             {/* Progress */}
@@ -82,14 +82,14 @@ const BookCard = (book: BookProps) => {
                                 ) : (
                                     <span
                                         onClick={() => setIsEditing(true)}
-                                        className="text-[10px] font-bold text-black group-hover:text-black transition-colors hover:scale-110 px-1 cursor-pointer"
+                                        className="text-[10px] font-bold text-black group-hover:text-primary-pink transition-colors hover:scale-110 px-1 cursor-pointer"
                                     >
                                         {progress}%
                                     </span>
                                 )}
                                 <div className="w-12 h-1.5 bg-white rounded-full overflow-hidden">
                                     <div
-                                        className="h-full bg-black/30 group-hover:bg-black transition-all duration-500"
+                                        className="h-full bg-black group-hover:bg-primary-pink transition-all duration-500"
                                         style={{ width: `${progress}%` }}
                                     />
                                 </div>
@@ -99,8 +99,8 @@ const BookCard = (book: BookProps) => {
                 </div>
 
                 <div className="mt-4 flex flex-between w-full text-sm font-bold uppercase tracking-widest">
-                    <span className="text-black group-hover:text-black transition-colors">{genre}</span>
-                    <span className="text-black group-hover:text-black transition-colors">{year}</span>
+                    <span className="text-black group-hover:text-primary-pink transition-colors">{genre}</span>
+                    <span className="text-black group-hover:text-primary-pink transition-colors">{year}</span>
                 </div>
             </div>
 

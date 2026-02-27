@@ -40,7 +40,6 @@
 /* theme block = the DNA of the design system */
 @theme {
   /* Fonts */
-  --font-bonbon: "Bonbon", cursive;
   --font-kapakana: "Kapakana", serif;
   --font-karrik: "Karrik", serif;
   --font-libre: "Libre Baskerville", serif;
@@ -49,10 +48,10 @@
   /* Colors */
   --color-black-100: #000000;
   --color-white-100: #FFFFFF;
-  --color-primary-green: #123622;
   --color-primary-white: #F6FAE9;
-  --color-primary-pink: #FFBDC5;
+  --color-primary-pink: #FF9FAA;
   --color-primary-brown: #8A633D;
+  --color-primary-red: #810013;
 
   /* Animations for smooth UI transitions*/
   --animate-fade-in: fade-in 0.5s ease-out;
@@ -88,7 +87,7 @@
   .book-card {
     @apply flex flex-col p-6 justify-center items-start text-black
           bg-primary-pink rounded-3xl cursor-pointer
-          hover:bg-primary-green hover:text-black hover:shadow-xl
+          hover:bg-primary-red hover:text-primary-pink hover:shadow-xl
           transition-all duration-300;
   }
   /* text box where users type the book title */
@@ -101,7 +100,11 @@
   .custom-btn {
     @apply flex flex-row relative justify-center items-center py-3 px-6
           outline-none bg-primary-pink text-black rounded-full
-          hover:opacity-90
           active:scale-95 transition-all;
+  }
+
+  .custom-btn:hover {
+    background-color: var(--color-primary-red);
+    color: var(--color-primary-pink);
   }
 }

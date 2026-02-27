@@ -8,12 +8,12 @@ const Footer = () => {
     const isJournal = pathname.startsWith("/journal");
     const textColor = "text-black";
     const mutedColor = "text-black/60";
-    const borderColor = isJournal ? "border-primary-white/20" : "border-primary-pink/20";
+    const borderColor = isJournal ? "border-primary-white" : "border-primary-pink/20";
 
     const navLinkClass = `text-sm font-karrik transition-opacity hover:opacity-100 opacity-70 ${textColor}`;
 
     return (
-        <footer className={`w-full mt-5 border-t ${borderColor}`}>
+        <footer className={`w-full mt-5 border-t bg-primary-white ${borderColor}`}>
             {/* Main footer content */}
             <div className="flex flex-wrap justify-between gap-10 sm:px-16 px-6 py-12">
                 {/* Brand */}
@@ -52,7 +52,7 @@ const Footer = () => {
                     &copy; 2026 mimi. All rights reserved.
                 </p>
                 <p className={`text-xs font-karrik ${mutedColor}`}>
-                    Made with love for readers.
+                    Made with love for daydreamers.
                 </p>
             </div>
         </footer>

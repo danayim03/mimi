@@ -5,14 +5,14 @@ import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/n
 import Link from "next/link";
 const NavBar = () => {
     const { user, isLoaded } = useUser();
-    const displayName = user?.username || user?.firstName || "My";
+    const displayName = user?.firstName || user?.username || "My";
 
     return (
         <header className="w-full fixed top-0 z-10">
             <nav className="max-width flex-between padding-x padding-y bg-primary-white">
 
                 <a href="/">
-                    <p className="font-karrik text-black">mimi</p>
+                    <p className="font-karrik text-black">HOME</p>
                 </a>
 
                 <div>
