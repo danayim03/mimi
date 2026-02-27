@@ -1,5 +1,3 @@
-// Footer.tsx = the bottom section of the website.
-// provides brand name and copyright info.
 "use client";
 
 import Link from "next/link";
@@ -9,27 +7,53 @@ const Footer = () => {
     const pathname = usePathname();
     const isJournal = pathname.startsWith("/journal");
     const textColor = isJournal ? "text-primary-white" : "text-primary-pink";
-    const borderColor = isJournal ? "border-primary-white" : "border-primary-pink";
+    const mutedColor = isJournal ? "text-primary-white/60" : "text-primary-pink/60";
+    const borderColor = isJournal ? "border-primary-white/20" : "border-primary-pink/20";
+
+    const navLinkClass = `text-sm font-karrik transition-opacity hover:opacity-100 opacity-70 ${textColor}`;
 
     return (
-        <footer className={`flex flex-col w-full mt-5 border-t ${borderColor}`}>
-            <div className="flex w-full max-md:flex-col flex-wrap justify-between gap-5 sm:px-16 px-6 py-10">
-                {/* Left */}
-                <div className="flex flex-col justify-start items-start gap-6">
-                    <p className={`text-base ${textColor} font-karrik`}>
-                        mimi 2026 <br />
-                        All rights reserved &copy;
+        <footer className={`w-full mt-5 border-t ${borderColor}`}>
+            {/* Main footer content */}
+            <div className="flex flex-wrap justify-between gap-10 sm:px-16 px-6 py-12">
+                {/* Brand */}
+                <div className="flex flex-col gap-3 max-w-xs">
+                    <span className={`text-2xl font-kapakana font-bold tracking-tight ${textColor}`}>
+                        mimi
+                    </span>
+                    <p className={`text-sm font-karrik leading-relaxed ${mutedColor}`}>
+                        Discover, track, and reflect on the books that shape you.
                     </p>
                 </div>
-                {/* Right */}
-                <div className="flex items-center">
-                    <Link
-                        href="/about"
-                        className={`text-base ${textColor} font-karrik`}
-                    >
-                        About
-                    </Link>
+
+                {/* Links */}
+                <div className="flex gap-16 flex-wrap">
+                    <div className="flex flex-col gap-3">
+                        <span className={`text-xs font-karrik uppercase tracking-widest ${mutedColor}`}>
+                            Explore
+                        </span>
+                        <Link href="/" className={navLinkClass}>Home</Link>
+                        <Link href="/#discover" className={navLinkClass}>Catalogue</Link>
+                        <Link href="/my-library" className={navLinkClass}>My Library</Link>
+                    </div>
+                    <div className="flex flex-col gap-3">
+                        <span className={`text-xs font-karrik uppercase tracking-widest ${mutedColor}`}>
+                            Company
+                        </span>
+                        <Link href="/about" className={navLinkClass}>About</Link>
+                        <Link href="/blogs" className={navLinkClass}>Blogs</Link>
+                    </div>
                 </div>
+            </div>
+
+            {/* Bottom bar */}
+            <div className={`flex flex-wrap items-center justify-between gap-4 sm:px-16 px-6 py-5 border-t ${borderColor}`}>
+                <p className={`text-xs font-karrik ${mutedColor}`}>
+                    &copy; 2026 mimi. All rights reserved.
+                </p>
+                <p className={`text-xs font-karrik ${mutedColor}`}>
+                    Made with love for readers.
+                </p>
             </div>
         </footer>
     );
