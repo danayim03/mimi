@@ -52,6 +52,7 @@
   --color-primary-green: #123622;
   --color-primary-white: #F6FAE9;
   --color-primary-pink: #FFBDC5;
+  --color-primary-brown: #8A633D;
 
   /* Animations for smooth UI transitions*/
   --animate-fade-in: fade-in 0.5s ease-out;
@@ -85,9 +86,9 @@
   /* component styles */
   /* container for each book result */
   .book-card {
-    @apply flex flex-col p-6 justify-center items-start text-primary-white
+    @apply flex flex-col p-6 justify-center items-start text-black
           bg-primary-pink rounded-3xl cursor-pointer
-          hover:bg-primary-green hover:text-primary-pink hover:shadow-xl
+          hover:bg-primary-green hover:text-black hover:shadow-xl
           transition-all duration-300;
   }
   /* text box where users type the book title */
@@ -99,7 +100,7 @@
   /* primary action button */
   .custom-btn {
     @apply flex flex-row relative justify-center items-center py-3 px-6
-          outline-none bg-primary-pink text-primary-white rounded-full
+          outline-none bg-primary-pink text-black rounded-full
           hover:opacity-90
           active:scale-95 transition-all;
   }

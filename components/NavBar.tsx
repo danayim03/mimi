@@ -12,7 +12,7 @@ const NavBar = () => {
             <nav className="max-width flex-between padding-x padding-y bg-primary-white">
 
                 <a href="/">
-                    <p className="font-bonbon text-primary-pink">mimi</p>
+                    <p className="font-karrik text-black">mimi</p>
                 </a>
 
                 <div>
@@ -29,7 +29,7 @@ const NavBar = () => {
                         <div className="flex items-center gap-4">
                             <Link
                                 href="/my-library"
-                                className="text-sm text-primary-pink font-bold"
+                                className="text-sm text-black font-bold"
                             >
                                 {isLoaded ? `${displayName}'s Library` : "My Library"}
                             </Link>

@@ -48,9 +48,9 @@ export default function Home() {
 
       {/* Search Bar Section */}
       <div className="mt-12 padding-x padding-y max-width" id="discover">
-        <div className="flex flex-col items-start justify-start gap-y-2.5">
-          <h1 id="book-catalogue" className="text-9xl font-bold font-kapakana font-light text-primary-pink scroll-mt-24">Book Catalogue</h1>
-          <p className="font-karrik text-primary-pink">Explore books you might like</p>
+        <div className="flex flex-col items-start justify-start gap-y-3">
+          <h1 id="book-catalogue" className="text-9xl font-kapakana font-light text-black scroll-mt-24">Book Catalogue</h1>
+          <p className="font-karrik text-black/70 text-base">Search by title, author, or genre — find your next obsession.</p>
         </div>
         <div className="mb-12">
           <SearchBar onSearch={handleSearch} />
@@ -60,7 +60,7 @@ export default function Home() {
           {loading ? (
             /* Loading State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-primary-pink font-karrik text-xl font-bold animate-pulse">
+              <h2 className="text-black font-karrik text-xl font-bold animate-pulse">
                 Searching the library...
               </h2>
             </div>
@@ -83,7 +83,7 @@ export default function Home() {
                   ← Prev
                 </button>
 
-                <span className="text-primary-pink font-bold text-sm">
+                <span className="text-black font-bold text-sm">
                   Page {page + 1}{totalPages > 0 ? ` of ${totalPages}` : ""}
                 </span>
 
@@ -99,7 +99,7 @@ export default function Home() {
           ) : (
             /* Empty State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-primary-pink text-xl font-bold">
+              <h2 className="text-black text-xl font-bold">
                 Oops, no results for "{[titleQuery, authorQuery].filter(Boolean).join(" by ")}"
               </h2>
             </div>

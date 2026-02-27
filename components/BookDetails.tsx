@@ -87,7 +87,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                 {/* Close Button */}
                 <button
                     onClick={closeModal}
-                    className="absolute top-4 right-4 p-2 bg-primary-white text-primary-pink rounded-full transition hover:bg-primary-pink hover:text-primary-white"
+                    className="absolute top-4 right-4 p-2 bg-primary-white text-black rounded-full transition hover:bg-primary-pink hover:text-black"
                 >
                     x
                 </button>
@@ -106,18 +106,18 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     <div className="flex flex-col gap-4 flex-1">
                         {/* Book Info */}
                         <div>
-                            <h2 className="text-3xl font-bold font-kapakana text-primary-pink leading-tight">
+                            <h2 className="text-3xl font-bold font-kapakana text-black leading-tight">
                                 {book.title}
                             </h2>
-                            <p className="text-lg text-primary-pink mt-2">
+                            <p className="text-lg text-black mt-2">
                                 By {book.author}
                             </p>
 
                             <div className="flex gap-4 mt-4">
-                                <span className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.genre}
                                 </span>
-                                <span className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.year}
                                 </span>
                                 {/* Add and Delete Button Based On isLibraryView prop */}
@@ -126,7 +126,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         // Delete Button
                                         <button
                                             onClick={handleDeleteFromLibrary}
-                                            className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-white"
+                                            className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
                                         >
                                             {isAdding ? "Removing..." : "Remove from Library"}
                                         </button>
@@ -135,7 +135,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         <button
                                             disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
                                             onClick={handleAddToLibrary}
-                                            className="bg-primary-white text-primary-pink px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-primary-white"
+                                            className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
                                         >
                                             {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
                                         </button>
@@ -146,10 +146,10 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
 
                         {/* Book Description */}
                         <div>
-                            <h3 className="text-lg text-primary-pink font-karrik">
+                            <h3 className="text-lg text-black font-karrik">
                                 Description
                             </h3>
-                            <p className="text-primary-pink leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <p className="text-black leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                                 {book.description || "No description available for this book."}
                             </p>
                         </div>

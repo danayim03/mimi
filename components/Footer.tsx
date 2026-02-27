@@ -6,8 +6,8 @@ import { usePathname } from "next/navigation";
 const Footer = () => {
     const pathname = usePathname();
     const isJournal = pathname.startsWith("/journal");
-    const textColor = isJournal ? "text-primary-white" : "text-primary-pink";
-    const mutedColor = isJournal ? "text-primary-white/60" : "text-primary-pink/60";
+    const textColor = "text-black";
+    const mutedColor = "text-black/60";
     const borderColor = isJournal ? "border-primary-white/20" : "border-primary-pink/20";
 
     const navLinkClass = `text-sm font-karrik transition-opacity hover:opacity-100 opacity-70 ${textColor}`;
@@ -18,7 +18,7 @@ const Footer = () => {
             <div className="flex flex-wrap justify-between gap-10 sm:px-16 px-6 py-12">
                 {/* Brand */}
                 <div className="flex flex-col gap-3 max-w-xs">
-                    <span className={`text-2xl font-kapakana font-bold tracking-tight ${textColor}`}>
+                    <span className={`text-9xl font-karrik font-bold tracking-tight ${textColor}`}>
                         mimi
                     </span>
                     <p className={`text-sm font-karrik leading-relaxed ${mutedColor}`}>

@@ -92,7 +92,7 @@ const MyLibrary = () => {
 
     if (!isLoaded || loading) return (
         <div className="flex items-center justify-center min-h-screen">
-            <h2 className="text-primary-pink font-karrik text-xl font-bold animate-pulse">
+            <h2 className="text-black font-karrik text-xl font-bold animate-pulse">
                 Loading your collection...
             </h2>
         </div>
@@ -165,7 +165,7 @@ const MyLibrary = () => {
                                 <div className="w-full">
                                     <button
                                         onClick={() => setOpenStack(null)}
-                                        className="mb-8 font-karrik text-xs text-primary-pink/50 uppercase tracking-widest hover:text-primary-pink transition-colors"
+                                        className="mb-8 font-karrik text-xs text-black/50 uppercase tracking-widest hover:text-black transition-colors"
                                     >
                                         ← {label}
                                     </button>
@@ -185,7 +185,7 @@ const MyLibrary = () => {
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-20">
-                        <h2 className="text-primary-pink/50 font-kapakana text-2xl italic">
+                        <h2 className="text-black/50 font-kapakana text-2xl italic">
                             Your shelves are currently bare...
                         </h2>
                     </div>
