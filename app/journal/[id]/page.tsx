@@ -142,7 +142,7 @@ const JournalPage = () => {
 
                 {/* Left — Book info + metadata */}
                 <div className="flex flex-col gap-6 md:w-1/2">
-                    <h1 className="font-kapakana font-light font-black text-8xl text-black leading-tight">
+                    <h1 className="font-kapakana font-light font-black text-5xl sm:text-8xl text-black leading-tight">
                         {book?.title ?? "Loading..."}
                     </h1>
                     <p className="font-karrik text-black/60 text-sm">

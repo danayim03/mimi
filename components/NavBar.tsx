@@ -26,12 +26,12 @@ const NavBar = () => {
                     </SignedOut>
                     {/* If the user is signed in, show this */}
                     <SignedIn>
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-2 sm:gap-4">
                             <Link
                                 href="/my-library"
-                                className="text-sm text-black font-bold"
+                                className="text-sm text-black font-bold truncate max-w-[120px] sm:max-w-none"
                             >
-                                {isLoaded ? `${displayName}'s Library` : "My Library"}
+                                {isLoaded ? `${displayName}'s LIBRARY` : "MY LIBRARY"}
                             </Link>
                             <UserButton afterSignOutUrl="/" />
                         </div>

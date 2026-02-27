@@ -15,7 +15,7 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className="relative bg-primary-white antialiased">
+        <body className="relative bg-primary-white antialiased overflow-x-hidden">
           <NavBar />
           <main className="pt-20">
             {children}

@@ -83,7 +83,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
     return (
         /* Blurred Background */
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-xs p-4">
-            <div className="bg-primary-red rounded-3xl max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl w-full max-h-[90vh] overflow-y-auto relative p-8">
+            <div className="bg-primary-red rounded-3xl w-[calc(100vw-2rem)] max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl max-h-[90vh] overflow-y-auto overflow-x-hidden relative p-4 sm:p-8">
                 {/* Close Button */}
                 <button
                     onClick={closeModal}
@@ -92,13 +92,13 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     x
                 </button>
 
-                <div className="flex flex-row gap-6 items-start mt-4">
+                <div className="flex flex-col sm:flex-row gap-6 items-start mt-4">
                     {/* Book Image */}
-                    <div className="shrink-0">
+                    <div className="shrink-0 self-center sm:self-start">
                         {book.image ? (
-                            <img src={book.image} alt={book.title} className="h-64 object-contain" />
+                            <img src={book.image} alt={book.title} className="h-44 sm:h-64 max-w-full object-contain" />
                         ) : (
-                            <img src="/default.png" alt="no book image found" className="h-64 object-contain" />
+                            <img src="/default.png" alt="no book image found" className="h-44 sm:h-64 max-w-full object-contain" />
                         )}
                     </div>
 
@@ -106,18 +106,18 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     <div className="flex flex-col gap-4 flex-1">
                         {/* Book Info */}
                         <div>
-                            <h2 className="text-3xl font-bold font-kapakana text-black leading-tight">
+                            <h2 className="text-2xl sm:text-3xl font-bold font-karrik text-primary-pink leading-tight">
                                 {book.title}
                             </h2>
-                            <p className="text-lg text-black mt-2">
+                            <p className="text-base sm:text-lg text-primary-pink mt-2">
                                 By {book.author}
                             </p>
 
-                            <div className="flex gap-4 mt-4">
-                                <span className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
+                            <div className="flex flex-wrap gap-2 sm:gap-4 mt-4">
+                                <span className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.genre}
                                 </span>
-                                <span className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.year}
                                 </span>
                                 {/* Add and Delete Button Based On isLibraryView prop */}
@@ -135,7 +135,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         <button
                                             disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
                                             onClick={handleAddToLibrary}
-                                            className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
+                                            className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
                                         >
                                             {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
                                         </button>
@@ -146,10 +146,10 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
 
                         {/* Book Description */}
                         <div>
-                            <h3 className="text-lg text-black font-karrik">
+                            <h3 className="text-lg text-primary-pink font-karrik">
                                 Description
                             </h3>
-                            <p className="text-black leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <p className="text-primary-pink leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                                 {book.description || "No description available for this book."}
                             </p>
                         </div>

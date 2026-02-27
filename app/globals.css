@@ -107,4 +107,13 @@
     background-color: var(--color-primary-red);
     color: var(--color-primary-pink);
   }
+
+  /* hides scrollbar while keeping scroll functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -43,9 +43,24 @@ const StackThumbnail = ({ title, books, onClick }: {
     </button>
 );
 
+interface JournalPost {
+    id: string;
+    content: string;
+    rating: number | null;
+    finished_date: string;
+    updated_at: string;
+    book_id: string;
+    books: {
+        title: string;
+        author: string;
+        image: string;
+    };
+}
+
 const MyLibrary = () => {
     const { user, isLoaded } = useUser();
     const [books, setBooks] = useState<any[]>([]);
+    const [journals, setJournals] = useState<JournalPost[]>([]);
     const [loading, setLoading] = useState(true);
     const [openStack, setOpenStack] = useState<"in-progress" | "finished" | null>(null);
 
@@ -68,25 +83,45 @@ const MyLibrary = () => {
     };
 
     useEffect(() => {
-        const fetchSavedBooks = async () => {
+        const fetchData = async () => {
             if (!user) return;
 
             try {
-                const { data, error } = await supabase
-                    .from('books')
-                    .select('*')
-                    .eq('user_id', user.id); // get books for this user only
-                if (error) throw error;
-                setBooks(data || []);
+                const [{ data: bookData, error: bookError }, { data: journalData }] = await Promise.all([
+                    supabase.from('books').select('*').eq('user_id', user.id),
+                    supabase
+                        .from('journals')
+                        .select('id, content, rating, finished_date, updated_at, book_id')
+                        .eq('user_id', user.id)
+                        .order('updated_at', { ascending: false }),
+                ]);
+
+                if (bookError) throw bookError;
+                const fetchedBooks = bookData || [];
+                setBooks(fetchedBooks);
+
+                // enrich journals with book info from the already-fetched books array
+                const enriched = (journalData || [])
+                    .filter((j: any) => j.content?.trim())
+                    .map((j: any) => {
+                        const book = fetchedBooks.find((b: any) => String(b.id) === String(j.book_id));
+                        return {
+                            ...j,
+                            books: book
+                                ? { title: book.title, author: book.author, image: book.image }
+                                : { title: "Unknown", author: "", image: "" },
+                        };
+                    });
+                setJournals(enriched as JournalPost[]);
             } catch (error) {
-                console.error("Error fetching your books:", error);
+                console.error("Error fetching library:", error);
             } finally {
-                setLoading(false); // books done loading
+                setLoading(false);
             }
         };
 
         if (isLoaded && user) {
-            fetchSavedBooks();
+            fetchData();
         }
     }, [user, isLoaded]);
 
@@ -101,7 +136,7 @@ const MyLibrary = () => {
     return (
         <> {/* Wrap everything in a Fragment */}
             {/* Profile Section */}
-            <section className="mt-10 mb-12 p-8 flex flex-col md:flex-row items-center gap-8 rounded-3xl max-width mx-auto padding-x">
+            <section className="mt-10 mb-12 p-8 flex flex-col md:flex-row items-center gap-8 rounded-3xl max-width mx-auto padding-x overflow-x-clip">
                 <div className="flex-1 text-center md:text-left relative">
                     {/* Container for the Text + Bunny */}
                     <div className="relative inline-block group">
@@ -131,6 +166,72 @@ const MyLibrary = () => {
                 </div>
             </section>
     
+            {/* Journal Gallery */}
+            {journals.length > 0 && (
+                <section className="padding-x max-width mx-auto mb-14">
+                    <div className="flex items-baseline gap-3 mb-5">
+                        <h2 className="font-kapakana text-2xl text-black">Reading Journal</h2>
+                        <span className="text-[10px] font-karrik text-black/40 uppercase tracking-widest">
+                            {journals.length} {journals.length === 1 ? "entry" : "entries"}
+                        </span>
+                    </div>
+
+                    <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
+                        {journals.map((journal) => (
+                            <a
+                                key={journal.id}
+                                href={`/journal/${journal.book_id}`}
+                                className="snap-start shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden bg-primary-red group cursor-pointer"
+                            >
+                                {/* Cover image area */}
+                                <div className="relative h-44 sm:h-52 w-full">
+                                    {journal.books?.image ? (
+                                        <img
+                                            src={journal.books.image}
+                                            alt={journal.books?.title}
+                                            className="w-full h-full object-cover opacity-50 group-hover:opacity-30 transition-opacity duration-300"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-primary-red/80" />
+                                    )}
+
+                                    {/* Gradient + text overlay */}
+                                    <div className="absolute inset-0 flex flex-col justify-end p-3 bg-gradient-to-t from-primary-red via-primary-red/40 to-transparent">
+                                        {journal.rating && (
+                                            <div className="flex gap-0.5 mb-1.5">
+                                                {[1, 2, 3, 4, 5].map((s) => (
+                                                    <span
+                                                        key={s}
+                                                        className={`text-[10px] ${s <= journal.rating! ? "text-primary-pink" : "text-primary-pink/20"}`}
+                                                    >
+                                                        ✦
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+                                        <p className="text-primary-pink/90 text-[11px] font-karrik line-clamp-3 leading-relaxed">
+                                            {journal.content}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Footer */}
+                                <div className="px-3 py-2.5 bg-primary-red">
+                                    <p className="text-primary-pink font-karrik text-xs font-bold truncate">
+                                        {journal.books?.title}
+                                    </p>
+                                    <p className="text-primary-pink/50 font-karrik text-[10px] mt-0.5">
+                                        {journal.finished_date
+                                            ? new Date(journal.finished_date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
+                                            : new Date(journal.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                                    </p>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </section>
+            )}
+
             {/* Stacks */}
             <main className="padding-x pb-20 max-width mx-auto">
                 {books.length > 0 ? (
