@@ -88,7 +88,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                 {/* Close Button */}
                 <button
                     onClick={closeModal}
-                    className="absolute top-4 right-4 p-2 bg-primary-white text-black rounded-full transition hover:bg-primary-pink hover:text-black"
+                    className="absolute top-4 right-4 p-2 bg-primary-pink text-primary-red rounded-full transition hover:text-black"
                 >
                     x
                 </button>
@@ -107,18 +107,18 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     <div className="flex flex-col gap-4 flex-1">
                         {/* Book Info */}
                         <div>
-                            <h2 className="text-2xl sm:text-3xl font-bold font-karrik text-primary-pink leading-tight">
+                            <h2 className="text-2xl sm:text-3xl font-bold font-swiss text-primary-pink leading-tight">
                                 {book.title}
                             </h2>
-                            <p className="text-base sm:text-lg text-primary-pink mt-2">
+                            <p className="text-base sm:text-lg font-swiss text-primary-pink mt-2">
                                 By {book.author}
                             </p>
 
                             <div className="flex flex-wrap gap-2 sm:gap-4 mt-4">
-                                <span className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-pink font-swiss text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.genre}
                                 </span>
-                                <span className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
+                                <span className="bg-primary-pink font-swiss text-primary-red px-3 py-1 rounded-full text-xs font-bold uppercase">
                                     {book.year}
                                 </span>
                                 {/* Add and Delete Button Based On isLibraryView prop */}
@@ -127,7 +127,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         // Delete Button
                                         <button
                                             onClick={handleDeleteFromLibrary}
-                                            className="bg-primary-white text-black px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
+                                            className="bg-primary-pink text-primary-red px-3 py-1 font-swiss rounded-full text-xs font-bold hover:text-black"
                                         >
                                             {isAdding ? "Removing..." : "Remove from Library"}
                                         </button>
@@ -136,7 +136,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                         <button
                                             disabled={isAdding}
                                             onClick={isSignedIn ? handleAddToLibrary : () => openSignIn()}
-                                            className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
+                                            className="bg-primary-pink text-primary-red px-3 py-1 font-swiss rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
                                         >
                                             {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}
                                         </button>
@@ -147,10 +147,10 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
 
                         {/* Book Description */}
                         <div>
-                            <h3 className="text-lg text-primary-pink font-karrik">
+                            <h3 className="text-lg text-primary-pink font-swiss">
                                 Description
                             </h3>
-                            <p className="text-primary-pink leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                            <p className="text-primary-pink font-swiss leading-relaxed text-sm max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                                 {book.description || "No description available for this book."}
                             </p>
                         </div>

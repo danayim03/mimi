@@ -50,7 +50,7 @@ export default function Home() {
       <div className="mt-12 padding-x padding-y max-width scroll-mt-20" id="discover">
         <div className="flex flex-col items-start justify-start gap-y-3">
           <h1 id="book-catalogue" className="text-9xl font-kapakana font-light text-black scroll-mt-24">Book Catalogue</h1>
-          <p className="font-karrik text-black/70 text-base">Search by title, author, or genre — find your next obsession.</p>
+          <p className="font-swiss text-black/70 text-base">Search by title, author, or genre — find your next obsession.</p>
         </div>
         <div className="mb-12">
           <SearchBar onSearch={handleSearch} />
@@ -60,7 +60,7 @@ export default function Home() {
           {loading ? (
             /* Loading State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-black font-karrik text-xl font-bold animate-pulse">
+              <h2 className="text-black font-swiss text-xl font-bold animate-pulse">
                 Searching the library...
               </h2>
             </div>

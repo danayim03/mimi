@@ -44,6 +44,7 @@
   --font-karrik: "Karrik", serif;
   --font-libre: "Libre Baskerville", serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui;
+  --font-swiss: Swiss, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 
   /* Colors */
   --color-black-100: #000000;
@@ -61,11 +62,11 @@
 /* layer block = decides which CSS rules should be prioritized if there's a conflict */
 @layer base {
   body {
-    @apply font-karrik antialiased;
+    @apply font-swiss antialiased;
   }
 
   h1, h2, h3 {
-    @apply font-kapakana;
+    @apply font-swiss;
   }
 }
 

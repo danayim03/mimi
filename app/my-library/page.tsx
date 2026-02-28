@@ -33,8 +33,8 @@ const StackThumbnail = ({ title, books, onClick }: {
             {/* Label on top card */}
             <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 pointer-events-none">
                 <div>
-                    <p className="font-karrik text-3xl text-primary-plum leading-tight">{title}</p>
-                    <p className="font-karrik text-[10px] text-primary-plum/50 uppercase tracking-widest mt-1">
+                    <p className="font-swiss text-3xl text-primary-plum leading-tight">{title}</p>
+                    <p className="font-swiss text-[10px] text-primary-plum/50 uppercase tracking-widest mt-1">
                         {books.length} {books.length === 1 ? "book" : "books"}
                     </p>
                 </div>
@@ -62,7 +62,9 @@ const MyLibrary = () => {
     const [books, setBooks] = useState<any[]>([]);
     const [journals, setJournals] = useState<JournalPost[]>([]);
     const [loading, setLoading] = useState(true);
-    const [openStack, setOpenStack] = useState<"in-progress" | "finished" | null>(null);
+    const [stackOpen, setStackOpen] = useState(false);
+    const [showInProgress, setShowInProgress] = useState(false);
+    const [showFinished, setShowFinished] = useState(false);
 
     const handleProgressUpdate = async (id: string, newProgress: number) => {
         try {
@@ -127,7 +129,7 @@ const MyLibrary = () => {
 
     if (!isLoaded || loading) return (
         <div className="flex items-center justify-center min-h-screen">
-            <h2 className="text-black font-karrik text-xl font-bold animate-pulse">
+            <h2 className="text-black font-swiss text-xl font-bold animate-pulse">
                 Loading your collection...
             </h2>
         </div>
@@ -142,8 +144,8 @@ const MyLibrary = () => {
                     <div className="relative inline-block group">
                         
                         {/* The Text Layer */}
-                        <h1 className="relative z-20 font-kapakana font-light text-8xl md:text-9xl text-black tracking-tight leading-[0.8] mb-2 drop-shadow-sm">
-                            {user?.firstName || "the Scholar"}'s Library
+                        <h1 className="relative z-20 font-swiss font-light text-8xl md:text-9xl text-black tracking-tight leading-[0.8] mb-2 drop-shadow-sm">
+                            {user?.firstName || "the Scholar"}'s <p className="font-kapakana">Library</p>
                         </h1>
 
                         {/* The Bunny Layer */}
@@ -154,7 +156,7 @@ const MyLibrary = () => {
                         />
                         
                         {/* Stats Section below the wrap */}
-                        <div className="relative z-20 flex justify-center md:justify-start gap-6 mt-4 text-black font-karrik text-xs uppercase tracking-[0.2em]">
+                        <div className="relative z-20 flex justify-center md:justify-start gap-6 mt-4 text-black font-swiss text-xs uppercase tracking-[0.2em]">
                             <span className="flex items-center gap-2">
                                 <span className="text-[10px]">✦</span> {books.length} Tomes
                             </span>
@@ -167,11 +169,19 @@ const MyLibrary = () => {
             </section>
     
             {/* Journal Gallery */}
+            {journals.length === 0 && (
+                <section className="padding-x max-width mx-auto mb-14">
+                    <div className="flex items-baseline gap-3 mb-5">
+                        <h2 className="font-swiss text-2xl text-black">Journals</h2>
+                    </div>
+                    <p className="font-swiss text-sm text-black/40">You have no journal entries yet.</p>
+                </section>
+            )}
             {journals.length > 0 && (
                 <section className="padding-x max-width mx-auto mb-14">
                     <div className="flex items-baseline gap-3 mb-5">
-                        <h2 className="font-karrik text-2xl text-black">Journals</h2>
-                        <span className="text-[10px] font-karrik text-black/40 uppercase tracking-widest">
+                        <h2 className="font-swiss text-2xl text-black">Journals</h2>
+                        <span className="text-[10px] font-swiss text-black/40 uppercase tracking-widest">
                             {journals.length} {journals.length === 1 ? "entry" : "entries"}
                         </span>
                     </div>
@@ -185,10 +195,10 @@ const MyLibrary = () => {
                             >
                                 {/* Header */}
                                 <div className="px-3 pt-3 pb-2.5 border-b border-black flex flex-col gap-1">
-                                    <p className="text-black font-karrik text-xs font-bold truncate">
+                                    <p className="text-black font-swiss text-xs font-bold truncate">
                                         {journal.books?.title}
                                     </p>
-                                    <p className="text-black/50 font-karrik text-[10px]">
+                                    <p className="text-black/50 font-swiss text-[10px]">
                                         {journal.finished_date
                                             ? new Date(journal.finished_date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
                                             : new Date(journal.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
@@ -209,7 +219,7 @@ const MyLibrary = () => {
 
                                 {/* Journal content area */}
                                 <div className="p-3">
-                                    <p className="text-black/80 text-[11px] font-karrik line-clamp-6 leading-relaxed">
+                                    <p className="text-black/80 text-[11px] font-swiss line-clamp-6 leading-relaxed">
                                         {journal.content}
                                     </p>
                                 </div>
@@ -223,42 +233,87 @@ const MyLibrary = () => {
             <main className="padding-x pb-20 max-width mx-auto">
                 {books.length > 0 ? (
                     <>
-                        {/* Closed — stacks in the same grid as cards */}
-                        {!openStack && (
-                            <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
-                                {books.filter(b => b.progress < 100).length > 0 && (
-                                    <StackThumbnail
-                                        title="In Progress"
-                                        books={books.filter(b => b.progress < 100)}
-                                        onClick={() => setOpenStack("in-progress")}
-                                    />
-                                )}
-                                {books.filter(b => b.progress === 100).length > 0 && (
-                                    <StackThumbnail
-                                        title="Finished"
-                                        books={books.filter(b => b.progress === 100)}
-                                        onClick={() => setOpenStack("finished")}
-                                    />
-                                )}
-                            </div>
+                        {/* Closed — stacks */}
+                        {!stackOpen && (
+                            <>
+                                <div className="flex items-baseline gap-3 mb-5">
+                                    <h2 className="font-swiss text-2xl text-black">Book Collection</h2>
+                                    <span className="text-[10px] font-swiss text-black/40 uppercase tracking-widest">
+                                        {books.length} {books.length === 1 ? "book" : "books"}
+                                    </span>
+                                </div>
+                                <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
+                                    {books.filter(b => b.progress < 100).length > 0 && (
+                                        <StackThumbnail
+                                            title="In Progress"
+                                            books={books.filter(b => b.progress < 100)}
+                                            onClick={() => { setStackOpen(true); setShowInProgress(true); setShowFinished(false); }}
+                                        />
+                                    )}
+                                    {books.filter(b => b.progress === 100).length > 0 && (
+                                        <StackThumbnail
+                                            title="Finished"
+                                            books={books.filter(b => b.progress === 100)}
+                                            onClick={() => { setStackOpen(true); setShowInProgress(false); setShowFinished(true); }}
+                                        />
+                                    )}
+                                </div>
+                            </>
                         )}
 
-                        {/* Open — full-width grid */}
-                        {openStack && (() => {
-                            const active = openStack === "in-progress"
-                                ? books.filter(b => b.progress < 100)
-                                : books.filter(b => b.progress === 100);
-                            const label = openStack === "in-progress" ? "In Progress" : "Finished";
+                        {/* Open — filter toggles + grid */}
+                        {stackOpen && (() => {
+                            const inProgressBooks = books.filter(b => b.progress < 100);
+                            const finishedBooks = books.filter(b => b.progress === 100);
+                            const activeBooks = [
+                                ...(showInProgress ? inProgressBooks : []),
+                                ...(showFinished ? finishedBooks : []),
+                            ];
+                            const toggle = (filter: "in-progress" | "finished") => {
+                                if (filter === "in-progress") {
+                                    if (showInProgress && !showFinished) return; // keep at least one active
+                                    setShowInProgress(v => !v);
+                                } else {
+                                    if (showFinished && !showInProgress) return;
+                                    setShowFinished(v => !v);
+                                }
+                            };
                             return (
                                 <div className="w-full">
-                                    <button
-                                        onClick={() => setOpenStack(null)}
-                                        className="mb-8 font-karrik text-xs text-black/50 uppercase tracking-widest hover:text-black transition-colors"
-                                    >
-                                        ← {label}
-                                    </button>
+                                    <div className="flex items-center gap-4 mb-8 flex-wrap">
+                                        <button
+                                            onClick={() => { setStackOpen(false); setShowInProgress(false); setShowFinished(false); }}
+                                            className="font-swiss text-xs text-black/50 uppercase tracking-widest hover:text-black transition-colors"
+                                        >
+                                            ←
+                                        </button>
+                                        {inProgressBooks.length > 0 && (
+                                            <button
+                                                onClick={() => toggle("in-progress")}
+                                                className={`font-swiss text-xs px-3 py-1 rounded-full transition-all ${
+                                                    showInProgress
+                                                        ? "bg-black text-white"
+                                                        : "bg-black/10 text-black/50 hover:bg-black/20"
+                                                }`}
+                                            >
+                                                In Progress ({inProgressBooks.length})
+                                            </button>
+                                        )}
+                                        {finishedBooks.length > 0 && (
+                                            <button
+                                                onClick={() => toggle("finished")}
+                                                className={`font-swiss text-xs px-3 py-1 rounded-full transition-all ${
+                                                    showFinished
+                                                        ? "bg-black text-white"
+                                                        : "bg-black/10 text-black/50 hover:bg-black/20"
+                                                }`}
+                                            >
+                                                Finished ({finishedBooks.length})
+                                            </button>
+                                        )}
+                                    </div>
                                     <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-10">
-                                        {active.map((book) => (
+                                        {activeBooks.map((book) => (
                                             <BookCard
                                                 key={book.id}
                                                 {...book}
@@ -273,7 +328,7 @@ const MyLibrary = () => {
                     </>
                 ) : (
                     <div className="flex flex-col items-center justify-center py-20">
-                        <h2 className="text-black/50 font-kapakana text-2xl italic">
+                        <h2 className="text-black/50 font-swiss text-2xl italic">
                             Your shelves are currently bare...
                         </h2>
                     </div>

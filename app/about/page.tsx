@@ -11,8 +11,8 @@ export default function About() {
                 
                 {/* Header Section */}
                 <header>
-                    <h1 className="text-5xl md:text-7xl font-karrik text-black mb-6 lowercase tracking-tighter">
-                        mimi’s purpose
+                    <h1 className="text-5xl md:text-7xl font-swiss text-black mb-6 lowercase tracking-tighter">
+                        about mimi
                     </h1>
                     <p className="text-2xl italic text-black font-medium leading-tight">
                         “We hope that your book collection gives you a better idea of who you are and what you stand for.”
@@ -21,7 +21,7 @@ export default function About() {
 
                 {/* Our Purpose */}
                 <section className="space-y-6">
-                    <h2 className="text-3xl font-karrik text-black lowercase">Our Purpose</h2>
+                    <h2 className="text-3xl font-swiss text-black lowercase">Our Purpose</h2>
                     <div className="text-lg leading-relaxed text-black/90 space-y-4">
                         <p>
                             mimi is dedicated to building a platform that encourages people to spend more time developing self.
@@ -34,7 +34,7 @@ export default function About() {
 
                 {/* Our Root */}
                 <section className="space-y-6">
-                    <h2 className="text-3xl font-karrik text-black lowercase">Our Root</h2>
+                    <h2 className="text-3xl font-swiss text-black lowercase">Our Root</h2>
                     <p className="text-lg leading-relaxed text-black/90">
                         It all goes down to Dana’s love for the core of Romanticism: emotional, imaginative, and most importantly, deeply personal.
                     </p>
@@ -42,7 +42,7 @@ export default function About() {
 
                 {/* About Romanticism */}
                 <section className="space-y-8 text-lg leading-relaxed text-black/90">
-                    <h2 className="text-3xl font-karrik text-black lowercase">About Romanticism</h2>
+                    <h2 className="text-3xl font-swiss text-black lowercase">About Romanticism</h2>
                     <p>
                         Romanticism was an artistic and intellectual orientation that took place in Western civilization from the late 18th to mid-19th century. It emphasized the subjective, emotional, and imaginative, valuing the individual and the personal.
                     </p>
