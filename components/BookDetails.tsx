@@ -2,7 +2,7 @@
 "use client";
 // import for Clerk
 import { supabase } from "@/utils/supabase";
-import { useUser } from "@clerk/nextjs";
+import { useClerk, useUser } from "@clerk/nextjs";
 import { useState } from "react";
 
 interface BookDetailsProps {
@@ -22,6 +22,7 @@ interface BookDetailsProps {
 
 const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsProps) => {
     const { isLoaded, isSignedIn, user } = useUser();
+    const { openSignIn } = useClerk();
     const [isAdding, setIsAdding] = useState(false);
     // if not opened, don't show anything
     if (!isOpen) return null;
@@ -133,8 +134,8 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                                     ) : (
                                         // Add Button
                                         <button
-                                            disabled={!isSignedIn || isAdding } // disable when not signed in or book being added to library
-                                            onClick={handleAddToLibrary}
+                                            disabled={isAdding}
+                                            onClick={isSignedIn ? handleAddToLibrary : () => openSignIn()}
                                             className="bg-primary-pink text-primary-red px-3 py-1 rounded-full text-xs font-bold hover:bg-primary-pink hover:text-black"
                                         >
                                             {isAdding ? "Adding..." : (isSignedIn ? "Add to My Library" : "Sign in to add books")}

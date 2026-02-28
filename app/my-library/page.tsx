@@ -33,7 +33,7 @@ const StackThumbnail = ({ title, books, onClick }: {
             {/* Label on top card */}
             <div className="absolute inset-0 z-10 flex flex-col justify-between p-6 pointer-events-none">
                 <div>
-                    <p className="font-kapakana text-3xl text-primary-plum leading-tight">{title}</p>
+                    <p className="font-karrik text-3xl text-primary-plum leading-tight">{title}</p>
                     <p className="font-karrik text-[10px] text-primary-plum/50 uppercase tracking-widest mt-1">
                         {books.length} {books.length === 1 ? "book" : "books"}
                     </p>
@@ -170,7 +170,7 @@ const MyLibrary = () => {
             {journals.length > 0 && (
                 <section className="padding-x max-width mx-auto mb-14">
                     <div className="flex items-baseline gap-3 mb-5">
-                        <h2 className="font-kapakana text-2xl text-black">Reading Journal</h2>
+                        <h2 className="font-karrik text-2xl text-black">Journals</h2>
                         <span className="text-[10px] font-karrik text-black/40 uppercase tracking-widest">
                             {journals.length} {journals.length === 1 ? "entry" : "entries"}
                         </span>
@@ -181,49 +181,36 @@ const MyLibrary = () => {
                             <a
                                 key={journal.id}
                                 href={`/journal/${journal.book_id}`}
-                                className="snap-start shrink-0 w-44 sm:w-52 rounded-2xl overflow-hidden bg-primary-red group cursor-pointer"
+                                className="snap-start shrink-0 w-44 sm:w-52 overflow-hidden bg-primary-white border border-black group cursor-pointer"
                             >
-                                {/* Cover image area */}
-                                <div className="relative h-44 sm:h-52 w-full">
-                                    {journal.books?.image ? (
-                                        <img
-                                            src={journal.books.image}
-                                            alt={journal.books?.title}
-                                            className="w-full h-full object-cover opacity-50 group-hover:opacity-30 transition-opacity duration-300"
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full bg-primary-red/80" />
-                                    )}
-
-                                    {/* Gradient + text overlay */}
-                                    <div className="absolute inset-0 flex flex-col justify-end p-3 bg-gradient-to-t from-primary-red via-primary-red/40 to-transparent">
-                                        {journal.rating && (
-                                            <div className="flex gap-0.5 mb-1.5">
-                                                {[1, 2, 3, 4, 5].map((s) => (
-                                                    <span
-                                                        key={s}
-                                                        className={`text-[10px] ${s <= journal.rating! ? "text-primary-pink" : "text-primary-pink/20"}`}
-                                                    >
-                                                        ✦
-                                                    </span>
-                                                ))}
-                                            </div>
-                                        )}
-                                        <p className="text-primary-pink/90 text-[11px] font-karrik line-clamp-3 leading-relaxed">
-                                            {journal.content}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Footer */}
-                                <div className="px-3 py-2.5 bg-primary-red">
-                                    <p className="text-primary-pink font-karrik text-xs font-bold truncate">
+                                {/* Header */}
+                                <div className="px-3 pt-3 pb-2.5 border-b border-black flex flex-col gap-1">
+                                    <p className="text-black font-karrik text-xs font-bold truncate">
                                         {journal.books?.title}
                                     </p>
-                                    <p className="text-primary-pink/50 font-karrik text-[10px] mt-0.5">
+                                    <p className="text-black/50 font-karrik text-[10px]">
                                         {journal.finished_date
                                             ? new Date(journal.finished_date).toLocaleDateString("en-US", { month: "short", year: "numeric" })
                                             : new Date(journal.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" })}
+                                    </p>
+                                    {journal.rating && (
+                                        <div className="flex gap-0.5 mt-0.5">
+                                            {[1, 2, 3, 4, 5].map((s) => (
+                                                <span
+                                                    key={s}
+                                                    className={`text-[10px] ${s <= journal.rating! ? "text-black" : "text-black/20"}`}
+                                                >
+                                                    ✦
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Journal content area */}
+                                <div className="p-3">
+                                    <p className="text-black/80 text-[11px] font-karrik line-clamp-6 leading-relaxed">
+                                        {journal.content}
                                     </p>
                                 </div>
                             </a>
