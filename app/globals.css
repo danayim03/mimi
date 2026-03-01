@@ -76,7 +76,7 @@
   }
   /* text box where users type the book title */
   .search-input {
-    @apply w-full h-[48px] pl-12 p-4 bg-primary-pink rounded-full
+    @apply w-full h-[48px] p-4 bg-primary-pink rounded-full
           outline-none text-sm border border-transparent
           focus:border-primary-white transition-all;
   }
