@@ -107,7 +107,7 @@ const BookDetails = ({ isOpen, closeModal, book, isLibraryView }: BookDetailsPro
                     <div className="flex flex-col gap-4 flex-1">
                         {/* Book Info */}
                         <div>
-                            <h2 className="text-2xl sm:text-3xl font-bold font-swiss text-primary-pink leading-tight">
+                            <h2 className="text-2xl sm:text-3xl italic font-swiss text-primary-pink leading-tight">
                                 {book.title}
                             </h2>
                             <p className="text-base sm:text-lg font-swiss text-primary-pink mt-2">

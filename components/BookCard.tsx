@@ -67,7 +67,7 @@ const BookCard = (book: BookProps) => {
                 onClick={() => setIsOpen(true)}
             >
                 <div className="relative w-full h-40 rounded-xl flex items-start justify-start">
-                    <span className="font-swiss text-4xl line-clamp-3">
+                    <span className="italic font-swiss text-4xl line-clamp-3">
                         {title}
                     </span>
                 </div>
@@ -81,13 +81,21 @@ const BookCard = (book: BookProps) => {
                             className="flex justify-between items-center w-full"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            {/* Journal */}
-                            <button
-                                onClick={() => router.push(`/journal/${id}`)}
-                                className="text-xs font-swiss font-bold bg-black text-primary-pink px-3 py-1 rounded-full group-hover:bg-primary-pink group-hover:text-primary-red hover:!bg-primary-red hover:!text-primary-pink transition-all cursor-pointer"
-                            >
-                                Journal
-                            </button>
+                            {/* Journal + Quotes */}
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => router.push(`/journal/${id}`)}
+                                    className="text-xs font-swiss font-bold bg-black text-white px-3 py-1 rounded-full group-hover:bg-primary-pink group-hover:text-primary-red hover:!bg-primary-red hover:!text-primary-pink transition-all cursor-pointer"
+                                >
+                                    Journal
+                                </button>
+                                <button
+                                    onClick={() => router.push(`/quotes/${id}`)}
+                                    className="text-xs font-swiss font-bold bg-black text-white px-3 py-1 rounded-full group-hover:bg-primary-pink group-hover:text-primary-red hover:!bg-primary-red hover:!text-primary-pink transition-all cursor-pointer"
+                                >
+                                    Quotes
+                                </button>
+                            </div>
 
                             {/* Progress */}
                             <div className="flex items-center gap-2">

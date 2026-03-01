@@ -34,7 +34,6 @@ const Footer = () => {
                         </span>
                         <Link href="/" className={navLinkClass}>Home</Link>
                         <Link href="/#discover" className={navLinkClass}>Catalogue</Link>
-                        <Link href="/my-library" className={navLinkClass}>My Library</Link>
                     </div>
                     <div className="flex flex-col gap-3">
                         <span className={`text-xs font-swiss uppercase tracking-widest ${mutedColor}`}>

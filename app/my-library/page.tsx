@@ -57,10 +57,22 @@ interface JournalPost {
     };
 }
 
+interface QuotePost {
+    id: number;
+    quote_text: string;
+    created_at: string;
+    book_id: string;
+    books: {
+        title: string;
+        author: string;
+    };
+}
+
 const MyLibrary = () => {
     const { user, isLoaded } = useUser();
     const [books, setBooks] = useState<any[]>([]);
     const [journals, setJournals] = useState<JournalPost[]>([]);
+    const [quotes, setQuotes] = useState<QuotePost[]>([]);
     const [loading, setLoading] = useState(true);
     const [stackOpen, setStackOpen] = useState(false);
     const [showInProgress, setShowInProgress] = useState(false);
@@ -89,20 +101,25 @@ const MyLibrary = () => {
             if (!user) return;
 
             try {
-                const [{ data: bookData, error: bookError }, { data: journalData }] = await Promise.all([
+                const [{ data: bookData, error: bookError }, { data: journalData }, { data: quoteData }] = await Promise.all([
                     supabase.from('books').select('*').eq('user_id', user.id),
                     supabase
                         .from('journals')
                         .select('id, content, rating, finished_date, updated_at, book_id')
                         .eq('user_id', user.id)
                         .order('updated_at', { ascending: false }),
+                    supabase
+                        .from('quotes')
+                        .select('id, quote_text, created_at, book_id')
+                        .eq('user_id', user.id)
+                        .order('created_at', { ascending: false }),
                 ]);
 
                 if (bookError) throw bookError;
                 const fetchedBooks = bookData || [];
                 setBooks(fetchedBooks);
 
-                // enrich journals with book info from the already-fetched books array
+                // enrich journals with book info
                 const enriched = (journalData || [])
                     .filter((j: any) => j.content?.trim())
                     .map((j: any) => {
@@ -115,6 +132,18 @@ const MyLibrary = () => {
                         };
                     });
                 setJournals(enriched as JournalPost[]);
+
+                // enrich quotes with book info
+                const enrichedQuotes = (quoteData || []).map((q: any) => {
+                    const book = fetchedBooks.find((b: any) => String(b.id) === String(q.book_id));
+                    return {
+                        ...q,
+                        books: book
+                            ? { title: book.title, author: book.author }
+                            : { title: "Unknown", author: "" },
+                    };
+                });
+                setQuotes(enrichedQuotes as QuotePost[]);
             } catch (error) {
                 console.error("Error fetching library:", error);
             } finally {
@@ -129,7 +158,7 @@ const MyLibrary = () => {
 
     if (!isLoaded || loading) return (
         <div className="flex items-center justify-center min-h-screen">
-            <h2 className="text-black font-swiss text-xl font-bold animate-pulse">
+            <h2 className="text-black/40 font-swiss text-xl animate-pulse">
                 Loading your collection...
             </h2>
         </div>
@@ -163,9 +192,44 @@ const MyLibrary = () => {
                             <span className="flex items-center gap-2">
                                 <span className="text-[10px]">✦</span> {books.filter(b => b.progress === 100).length} Finished
                             </span>
+                            <span className="flex items-center gap-2">
+                                <span className="text-[10px]">✦</span> {books.filter(b => b.progress !== 100).length} In Progress
+                            </span>
                         </div>
                     </div>
                 </div>
+            </section>
+
+                        {/* Quotes Gallery */}
+                        <section className="padding-x max-width mx-auto mb-14">
+                <div className="flex items-baseline gap-3 mb-5">
+                    <h2 className="font-swiss text-2xl text-black">Quotes</h2>
+                    <span className="text-[10px] font-swiss text-black/40 uppercase tracking-widest">
+                        {quotes.length} {quotes.length === 1 ? "quote" : "quotes"}
+                    </span>
+                </div>
+                {quotes.length === 0 ? (
+                    <p className="font-swiss text-sm text-black/40">You have not saved any quotes yet.</p>
+                ) : (
+                    <div className="flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory scrollbar-hide">
+                        {quotes.map((quote) => (
+                            <a
+                                key={quote.id}
+                                href={`/quotes/${quote.book_id}`}
+                                className="snap-start shrink-0 w-52 sm:w-64 overflow-hidden bg-primary-white border border-black group cursor-pointer"
+                            >
+                                <div className="p-4 flex flex-col gap-3">
+                                    <p className="font-swiss text-black text-xs leading-relaxed line-clamp-5">
+                                        &ldquo;{quote.quote_text}&rdquo;
+                                    </p>
+                                    <p className="font-swiss text-black/40 text-[10px] italic border-t border-black/10 pt-2">
+                                        — {quote.books?.title} by {quote.books?.author}
+                                    </p>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                )}
             </section>
     
             {/* Journal Gallery */}
@@ -195,7 +259,7 @@ const MyLibrary = () => {
                             >
                                 {/* Header */}
                                 <div className="px-3 pt-3 pb-2.5 border-b border-black flex flex-col gap-1">
-                                    <p className="text-black font-swiss text-xs font-bold truncate">
+                                    <p className="text-black italic font-swiss text-xs font-bold truncate">
                                         {journal.books?.title}
                                     </p>
                                     <p className="text-black/50 font-swiss text-[10px]">

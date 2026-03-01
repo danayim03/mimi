@@ -8,13 +8,16 @@ import { ClerkProvider } from '@clerk/nextjs';
 // search engine optimization (SEO, aka the metadata)
 export const metadata = {
   title: "mimi",
-  description: "The modern sanctuary for readers to track, discover, and organize their literary world.",
+  description: "The modern sanctuary to track, discover, and organize your literary world.",
 };
 
 export default function RootLayout({ children, }: { children: React.ReactNode; }) {
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="preload" href="/romance-vid.mp4" as="video" type="video/mp4" />
+        </head>
         <body className="relative bg-primary-white antialiased overflow-x-hidden">
           <NavBar />
           <main className="pt-20">
