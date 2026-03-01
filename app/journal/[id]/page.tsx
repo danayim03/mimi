@@ -32,11 +32,6 @@ const JournalPage = () => {
     const [saving, setSaving] = useState(false);
     const [saved, setSaved] = useState(false);
 
-    // Override body background to pink for this page only
-    useEffect(() => {
-        document.body.style.backgroundColor = "#FFBDC5";
-        return () => { document.body.style.backgroundColor = ""; };
-    }, []);
 
     // Fetch book info and existing journal entry
     useEffect(() => {
@@ -129,7 +124,8 @@ const JournalPage = () => {
     if (!isLoaded) return null;
 
     return (
-        <div className="min-h-screen bg-primary-pink -mt-20 pt-20">
+        <div className="px-4 sm:px-8 pb-2">
+        <div className="bg-primary-pink rounded-3xl min-h-[80vh]">
         <div className="padding-x max-width mx-auto py-16">
             <button
                 onClick={() => router.back()}
@@ -207,6 +203,7 @@ const JournalPage = () => {
                 </div>
 
             </div>
+        </div>
         </div>
         </div>
     );

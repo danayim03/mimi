@@ -1,7 +1,9 @@
 const BlogsPage = () => {
     return (
-        <main className="flex items-center justify-center min-h-screen">
-            <p className="font-swiss text-black/40 text-sm">mimi does not have any blogs yet. Stay tuned!</p>
+        <main className="px-4 sm:px-8 pb-2">
+            <div className="bg-primary-white rounded-3xl flex items-center justify-center min-h-[80vh]">
+                <p className="font-swiss text-black/40 text-sm">No blogs yet.</p>
+            </div>
         </main>
     );
 };

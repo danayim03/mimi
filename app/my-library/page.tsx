@@ -77,6 +77,8 @@ const MyLibrary = () => {
     const [stackOpen, setStackOpen] = useState(false);
     const [showInProgress, setShowInProgress] = useState(false);
     const [showFinished, setShowFinished] = useState(false);
+    const [isPublic, setIsPublic] = useState(true);
+    const [savingVisibility, setSavingVisibility] = useState(false);
 
     const handleProgressUpdate = async (id: string, newProgress: number) => {
         try {
@@ -96,12 +98,23 @@ const MyLibrary = () => {
         }
     };
 
+    const handleVisibilityToggle = async () => {
+        if (!user) return;
+        setSavingVisibility(true);
+        const newValue = !isPublic;
+        setIsPublic(newValue);
+        await supabase
+            .from('user_settings')
+            .upsert({ user_id: user.id, is_public: newValue }, { onConflict: 'user_id' });
+        setSavingVisibility(false);
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             if (!user) return;
 
             try {
-                const [{ data: bookData, error: bookError }, { data: journalData }, { data: quoteData }] = await Promise.all([
+                const [{ data: bookData, error: bookError }, { data: journalData }, { data: quoteData }, { data: settingsData }] = await Promise.all([
                     supabase.from('books').select('*').eq('user_id', user.id),
                     supabase
                         .from('journals')
@@ -113,9 +126,15 @@ const MyLibrary = () => {
                         .select('id, quote_text, created_at, book_id')
                         .eq('user_id', user.id)
                         .order('created_at', { ascending: false }),
+                    supabase
+                        .from('user_settings')
+                        .select('is_public')
+                        .eq('user_id', user.id)
+                        .single(),
                 ]);
 
                 if (bookError) throw bookError;
+                setIsPublic(settingsData?.is_public ?? true);
                 const fetchedBooks = bookData || [];
                 setBooks(fetchedBooks);
 
@@ -165,7 +184,8 @@ const MyLibrary = () => {
     );
 
     return (
-        <> {/* Wrap everything in a Fragment */}
+        <div className="px-4 sm:px-8 pb-2">
+        <div className="bg-primary-white rounded-3xl overflow-hidden">
             {/* Profile Section */}
             <section className="mt-10 mb-12 p-8 flex flex-col md:flex-row items-center gap-8 rounded-3xl max-width mx-auto padding-x overflow-x-clip">
                 <div className="flex-1 text-center md:text-left relative">
@@ -184,8 +204,8 @@ const MyLibrary = () => {
                             className="absolute -top-4 -right-12 w-64 md:w-80 z-10 opacity-90 pointer-events-none select-none transform translate-x-4"
                         />
                         
-                        {/* Stats Section below the wrap */}
-                        <div className="relative z-20 flex justify-center md:justify-start gap-6 mt-4 text-black font-swiss text-xs uppercase tracking-[0.2em]">
+                        {/* Stats + Visibility */}
+                        <div className="relative z-20 flex flex-wrap justify-center md:justify-start gap-6 mt-4 text-black font-swiss text-xs uppercase tracking-[0.2em]">
                             <span className="flex items-center gap-2">
                                 <span className="text-[10px]">✦</span> {books.length} Tomes
                             </span>
@@ -195,6 +215,17 @@ const MyLibrary = () => {
                             <span className="flex items-center gap-2">
                                 <span className="text-[10px]">✦</span> {books.filter(b => b.progress !== 100).length} In Progress
                             </span>
+                            <button
+                                onClick={handleVisibilityToggle}
+                                disabled={savingVisibility}
+                                className={`flex items-center gap-2 px-3 py-1 rounded-full border transition-all text-[10px] font-swiss uppercase tracking-widest
+                                    ${isPublic
+                                        ? "border-black/20 text-black/60 hover:border-black"
+                                        : "border-black bg-black text-white"
+                                    }`}
+                            >
+                                {isPublic ? "🌐 Public" : "🔒 Private"}
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -398,7 +429,8 @@ const MyLibrary = () => {
                     </div>
                 )}
             </main>
-        </>
+        </div>
+        </div>
     );
 }
 

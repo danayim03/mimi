@@ -6,7 +6,8 @@ export const metadata: Metadata = {
 
 export default function About() {
     return (
-        <main className="flex flex-col items-center px-6 py-20 sm:px-16 min-h-screen">
+        <main className="px-4 sm:px-8 pb-2">
+        <div className="bg-primary-white rounded-3xl flex flex-col items-center px-6 py-20 sm:px-16 min-h-[80vh]">
             <div className="max-w-3xl w-full space-y-16">
                 
                 {/* Header Section */}
@@ -81,6 +82,7 @@ export default function About() {
                     </div>
                 </section>
             </div>
+        </div>
         </main>
     );
 }

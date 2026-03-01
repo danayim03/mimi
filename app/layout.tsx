@@ -18,9 +18,9 @@ export default function RootLayout({ children, }: { children: React.ReactNode; }
         <head>
           <link rel="preload" href="/romance-vid.mp4" as="video" type="video/mp4" />
         </head>
-        <body className="relative bg-primary-white antialiased overflow-x-hidden">
+        <body className="relative bg-white antialiased overflow-x-hidden">
           <NavBar />
-          <main className="pt-20">
+          <main className="pt-[52px]">
             {children}
           </main>
           <Footer />

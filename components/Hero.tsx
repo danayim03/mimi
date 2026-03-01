@@ -7,7 +7,7 @@ const Hero = () => {
     };
 
     return (
-        <div className="relative max-width padding-x pt-12 pb-20 flex flex-col">
+        <div className="relative max-width padding-x pt-20 pb-20 flex flex-col">
             {/* Title — sits above the video, bottom edge overlaps it */}
             <h1 className="relative z-10 text-[clamp(4rem,12vw,10rem)] font-swiss font-bold leading-none text-black mb-[-1.25rem] md:mb-[-2rem]">
                 mimi

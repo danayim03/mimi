@@ -42,12 +42,16 @@ export default function Home() {
   const totalPages = Math.ceil(totalItems / PAGE_SIZE);
 
   return (
-    <main className="overflow-hidden">
-      {/* Main Content Section */}
-      <Hero />
+    <main className="flex flex-col gap-2 px-4 sm:px-8 pb-2">
 
-      {/* Search Bar Section */}
-      <div className="mt-12 padding-x padding-y max-width scroll-mt-20" id="discover">
+      {/* Hero Card */}
+      <div className="bg-primary-white rounded-3xl overflow-hidden">
+        <Hero />
+      </div>
+
+      {/* Catalogue Card */}
+      <div className="bg-primary-white rounded-3xl" id="discover">
+      <div className="mt-12 padding-x padding-y max-width scroll-mt-20">
         <div className="flex flex-col items-start justify-start gap-y-3">
           <h1 id="book-catalogue" className="text-9xl font-kapakana font-light text-black scroll-mt-24">Book Catalogue</h1>
           <p className="font-swiss text-black/70 text-base">Search by title, author, or genre — find your next obsession.</p>
@@ -60,7 +64,7 @@ export default function Home() {
           {loading ? (
             /* Loading State */
             <div className="flex justify-center items-center mt-20">
-              <h2 className="text-black font-swiss text-xl font-bold animate-pulse">
+              <h2 className="text-black font-swiss text-xl animate-pulse">
                 Searching the library...
               </h2>
             </div>
@@ -106,6 +110,8 @@ export default function Home() {
           )}
         </section>
       </div>
+      </div>
+
     </main>
   );
 }

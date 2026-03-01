@@ -13,7 +13,8 @@ const Footer = () => {
     const navLinkClass = `text-sm font-swiss transition-opacity hover:opacity-100 opacity-70 ${textColor}`;
 
     return (
-        <footer className={`w-full mt-5 border-t bg-primary-white ${borderColor}`}>
+        <footer className="w-full px-4 sm:px-8 pb-4 mt-2">
+        <div className="bg-primary-white rounded-3xl overflow-hidden">
             {/* Main footer content */}
             <div className="flex flex-wrap justify-between gap-10 sm:px-16 px-6 py-12">
                 {/* Brand */}
@@ -41,12 +42,13 @@ const Footer = () => {
                         </span>
                         <Link href="/about" className={navLinkClass}>About</Link>
                         <Link href="/blogs" className={navLinkClass}>Blogs</Link>
+                        <Link href="/contact" className={navLinkClass}>Contact</Link>
                     </div>
                 </div>
             </div>
 
             {/* Bottom bar */}
-            <div className={`flex flex-wrap items-center justify-between gap-4 sm:px-16 px-6 py-5 border-t ${borderColor}`}>
+            <div className="flex flex-wrap items-center justify-between gap-4 sm:px-16 px-6 py-5 border-t border-black/10">
                 <p className={`text-xs font-swiss ${mutedColor}`}>
                     &copy; 2026 mimi. All rights reserved.
                 </p>
@@ -54,6 +56,7 @@ const Footer = () => {
                     Made with love for daydreamers.
                 </p>
             </div>
+        </div>
         </footer>
     );
 };
