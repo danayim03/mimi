@@ -103,7 +103,11 @@ export default function BookCatalogue({ initialData }: BookCatalogueProps) {
             <>
               <div className="grid 2xl:grid-cols-4 xl:grid-cols-3 md:grid-cols-2 grid-cols-1 w-full gap-x-10 gap-y-10">
                 {books.map((book, index) => (
-                  <BookCard key={`${book.title}-${index}`} {...book} />
+                  <BookCard
+                    key={`${book.title}-${index}`}
+                    {...book}
+                    year={typeof book.year === "string" ? parseInt(book.year, 10) || 0 : book.year}
+                  />
                 ))}
               </div>
 
