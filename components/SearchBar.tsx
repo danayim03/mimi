@@ -17,7 +17,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
     };
 
     return (
-        <form className="flex items-center w-full max-w-3xl mt-10 gap-4" onSubmit={handleSubmit}>
+        <form className="flex flex-col sm:flex-row items-stretch sm:items-center w-full max-w-3xl mt-10 gap-4" onSubmit={handleSubmit}>
             <input
                 type="text"
                 placeholder="Search by title..."
@@ -32,7 +32,7 @@ const SearchBar = ({ onSearch }: SearchBarProps) => {
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
             />
-            <button type="submit" className="custom-btn min-w-[100px]">
+            <button type="submit" className="custom-btn self-start px-5 py-2 text-sm">
                 Search
             </button>
         </form>

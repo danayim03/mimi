@@ -1,7 +1,8 @@
 // BookCard.tsx = A reusable card that displays individual book details.
 "use client";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, useState } from "react";
 import BookDetails from "./BookDetails";
 
 interface BookProps {
@@ -20,18 +21,41 @@ interface BookProps {
 const BookCard = (book: BookProps) => {
     const { id, title, author, genre, year, description, image, isLibraryView, onProgressUpdate } = book;
     const progress = book.progress ?? 0;
+    const router = useRouter();
     const [ isOpen, setIsOpen ] = useState(false);
-    // editing states for progress
     const [isEditing, setIsEditing] = useState(false);
-    const [tempProgress, setTempProgress] = useState(progress);
+    const [currentPage, setCurrentPage] = useState("");
+    const [totalPages, setTotalPages] = useState("");
+    const blurTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const handleKeyDown = async (e: React.KeyboardEvent) => {
-        if (e.key === "Enter") {
-            const val = Math.min(Math.max(Number(tempProgress), 0), 100);
+    const handleSavePages = async (cp = currentPage, tp = totalPages) => {
+        const current = parseInt(cp);
+        const total = parseInt(tp);
+        if (!isNaN(current) && !isNaN(total) && total > 0) {
+            const val = Math.min(Math.round((current / total) * 100), 100);
             if (onProgressUpdate && id) {
                 await onProgressUpdate(id, val);
             }
+        }
+        setIsEditing(false);
+        setCurrentPage("");
+        setTotalPages("");
+    };
+
+    const handleBlur = () => {
+        blurTimeout.current = setTimeout(() => handleSavePages(), 150);
+    };
+
+    const handleFocus = () => {
+        if (blurTimeout.current) clearTimeout(blurTimeout.current);
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter") handleSavePages();
+        if (e.key === "Escape") {
             setIsEditing(false);
+            setCurrentPage("");
+            setTotalPages("");
         }
     };
 
@@ -39,60 +63,89 @@ const BookCard = (book: BookProps) => {
         <>
             {/* Clickable Card */}
             <div 
-                className="book-card cursor-pointer transform transition-all duration-300 hover:scale-105"
+                className="book-card group cursor-pointer transform transition-all duration-300 hover:scale-105"
                 onClick={() => setIsOpen(true)}
             >
                 <div className="relative w-full h-40 rounded-xl flex items-start justify-start">
-                    <span className="font-bold text-4xl line-clamp-3">
+                    <span className="italic font-swiss text-4xl line-clamp-3">
                         {title}
                     </span>
                 </div>
 
                 <div className="flex flex-col gap-2 w-full">
-                    <div className="flex justify-between items-center w-full">
-                        <p className="text-sm text-primary-plum">
-                            By {author}
-                        </p>
-                        {/* Progress Update */}
-                        {isLibraryView && (
-                                <div 
-                                    className="flex items-center gap-2"
-                                    onClick={(e) => e.stopPropagation()} // stops modal from opening
+                    <p className="text-sm text-black font-swiss group-hover:text-primary-pink transition-colors">By {author}</p>
+
+                    {/* Progress + Journal row — library view only */}
+                    {isLibraryView && (
+                        <div
+                            className="flex justify-between items-center w-full"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Journal + Quotes */}
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => router.push(`/journal/${id}`)}
+                                    className="text-xs font-swiss font-bold bg-black text-white px-3 py-1 rounded-full group-hover:bg-primary-pink group-hover:text-primary-red hover:!bg-primary-red hover:!text-primary-pink transition-all cursor-pointer"
                                 >
-                                    {isEditing ? (
+                                    Journal
+                                </button>
+                                <button
+                                    onClick={() => router.push(`/quotes/${id}`)}
+                                    className="text-xs font-swiss font-bold bg-black text-white px-3 py-1 rounded-full group-hover:bg-primary-pink group-hover:text-primary-red hover:!bg-primary-red hover:!text-primary-pink transition-all cursor-pointer"
+                                >
+                                    Quotes
+                                </button>
+                            </div>
+
+                            {/* Progress */}
+                            <div className="flex items-center gap-2">
+                                {isEditing ? (
+                                    <div className="flex items-center gap-1">
                                         <input
                                             autoFocus
                                             type="number"
-                                            value={tempProgress}
-                                            onChange={(e) => setTempProgress(Number(e.target.value))}
+                                            placeholder="pg"
+                                            value={currentPage}
+                                            onChange={(e) => setCurrentPage(e.target.value)}
                                             onKeyDown={handleKeyDown}
-                                            onBlur={() => setIsEditing(false)}
-                                            className="w-10 bg-primary-plum text-primary-pink text-[10px] font-bold rounded text-center outline-none"
+                                            onBlur={handleBlur}
+                                            onFocus={handleFocus}
+                                            className="w-9 bg-primary-white text-black text-[10px] font-swiss rounded text-center outline-none placeholder:text-black/30"
                                         />
-                                    ) : (
-                                        <span
-                                            onClick={() => setIsEditing(true)}
-                                            className="text-[10px] font-bold text-primary-plum hover:scale-110 transition-transform px-1 cursor-edit"
-                                        >
-                                            {progress}%
-                                        </span>
-                                    )}
-                                    {/* Visual Progress Bar */}
-                                    <div className="w-12 h-1.5 bg-white rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full bg-primary-plum transition-all duration-500"
-                                            style={{ width: `${progress}%` }}
+                                        <span className="text-[10px] text-black/50">/</span>
+                                        <input
+                                            type="number"
+                                            placeholder="total"
+                                            value={totalPages}
+                                            onChange={(e) => setTotalPages(e.target.value)}
+                                            onKeyDown={handleKeyDown}
+                                            onBlur={handleBlur}
+                                            onFocus={handleFocus}
+                                            className="w-9 bg-primary-white text-black text-[10px] font-swiss rounded text-center outline-none placeholder:text-black/30"
                                         />
                                     </div>
-
+                                ) : (
+                                    <span
+                                        onClick={() => setIsEditing(true)}
+                                        className="text-[10px] font-swiss text-black group-hover:text-primary-pink transition-colors hover:scale-110 px-1 cursor-pointer"
+                                    >
+                                        {progress}%
+                                    </span>
+                                )}
+                                <div className="w-12 h-1.5 bg-white rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-black group-hover:bg-primary-pink transition-all duration-500"
+                                        style={{ width: `${progress}%` }}
+                                    />
+                                </div>
                             </div>
-                        )}
-                    </div>
+                        </div>
+                    )}
                 </div>
 
                 <div className="mt-4 flex flex-between w-full text-sm font-bold uppercase tracking-widest">
-                    <span className="text-primary-plum">{genre}</span>
-                    <span className="text-primary-plum">{year}</span>
+                    <span className="text-black font-swiss group-hover:text-primary-pink transition-colors">{genre}</span>
+                    <span className="text-black font-swiss group-hover:text-primary-pink transition-colors">{year}</span>
                 </div>
             </div>
 
