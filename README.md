@@ -1,6 +1,6 @@
 # mimi
 
-<!-- Add your project logo here -->
+![Screenshot 2026-03-13 at 2 09 09 AM](https://github.com/user-attachments/assets/ec0c6ca7-e807-46ac-930a-37889034edf7)
 
 **The modern sanctuary to track, discover, and organize your literary world.**
 
@@ -11,6 +11,19 @@ A personal reading companion to build your library, log journals, save quotes, a
 ## Screenshots / Demo
 
 <!-- Add your images, GIFs, or animations here to showcase the app -->
+![Screenshot 2026-03-13 at 2 09 47 AM](https://github.com/user-attachments/assets/01f2d5a6-96f9-4cae-90a4-92c05beb7d94)
+
+![Screenshot 2026-03-13 at 2 09 59 AM](https://github.com/user-attachments/assets/6866d24b-60ac-4a0a-b5c7-b872828e24af)
+
+![Screenshot 2026-03-13 at 2 10 19 AM](https://github.com/user-attachments/assets/d5f65926-3621-4f25-b718-0e8d4ec2a6e6)
+
+![Screenshot 2026-03-13 at 2 13 02 AM](https://github.com/user-attachments/assets/7de3d1db-4ba1-4477-8f11-145a439d0c43)
+
+![Screenshot 2026-03-13 at 2 14 00 AM](https://github.com/user-attachments/assets/f62d7474-290c-474a-8fc9-402a9f424b01)
+
+![Screenshot 2026-03-13 at 2 10 42 AM](https://github.com/user-attachments/assets/bad6b202-d380-426a-ab76-c6335c856d60)
+
+![Screenshot 2026-03-13 at 2 11 55 AM](https://github.com/user-attachments/assets/b037283f-555b-4943-889b-282ae8323cfa)
 
 ---
 
@@ -114,6 +127,7 @@ mimi is rooted in a love for the core of Romanticism: the emotional, the imagina
 - Point the production branch in your host (e.g. Vercel “Production Branch”) to the branch you use for releases (e.g. `main` or `mimi`).
 
 ---
+
 
 ## Project hygiene
 
