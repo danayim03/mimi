@@ -1,45 +1,139 @@
-# BookHub.
+# mimi
 
-## UI:
-![Screenshot 2026-02-24 at 1 37 51 AM](https://github.com/user-attachments/assets/aa11f01f-327a-4898-8d5e-eab592b17c75)
+<!-- Add your project logo here -->
 
-![Screenshot 2026-02-24 at 1 35 43 AM](https://github.com/user-attachments/assets/8d7c8f22-d9a0-4235-9627-5e99b2fb3fc3)
+**The modern sanctuary to track, discover, and organize your literary world.**
 
-![Screenshot 2026-02-24 at 1 34 35 AM](https://github.com/user-attachments/assets/b1b778f3-d14c-4c57-b80c-f3e1e556c92d)
+A personal reading companion to build your library, log journals, save quotes, and explore books — with authentication and data that stays yours.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+## Screenshots / Demo
 
-First, run the development server:
+<!-- Add your images, GIFs, or animations here to showcase the app -->
+
+---
+
+## Feature highlights
+
+- **Book catalogue** — Search by title or author, browse results with pagination (powered by Google Books API). Initial load is server-rendered for fast first paint.
+- **My Library** — Organize books into stacks: Reading, To Read, and Finished. View your collection as visual stacks.
+- **Journals** — Attach journal entries to books (e.g. reflections, ratings, finish dates). Edit and manage them from the book or journal views.
+- **Quotes** — Save and revisit quotes per book.
+- **User profiles** — Public profile pages at `/user/[id]` and user search in the navbar (when signed in).
+- **Auth** — Sign in, sign up, and session handling via Clerk. Library and journal data stored in Supabase and tied to your account.
+
+---
+
+## Quickstart
+
+```bash
+git clone https://github.com/danayim03/bookhub.git
+cd bookhub
+npm install
+```
+
+Create `.env.local` with:
+
+- `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` — Clerk publishable key  
+- `CLERK_SECRET_KEY` — Clerk secret key  
+- `NEXT_PUBLIC_SUPABASE_URL` — Supabase project URL  
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` — Supabase anon key  
+- `NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY` — Google Books API key  
+
+Then:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Why mimi?
 
-## Learn More
+mimi is for anyone who wants an intentional space to choose what they read and reflect on it. It helps you build a personal library, track progress, and keep journals and quotes in one place — so your reading life is organized and meaningful rather than scattered.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Backstory
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+mimi is rooted in a love for the core of Romanticism: the emotional, the imaginative, and the deeply personal. In a world full of noise, the project aims to give people a place to build their world by choosing what they intake and reflect on — starting with books.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Getting started (detailed)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+
+- Node.js (project uses Next.js 16 and React 19)
+- Accounts and keys for [Clerk](https://clerk.com), [Supabase](https://supabase.com), and [Google Books API](https://developers.google.com/books)
+
+### Setup
+
+1. **Clone and install**
+
+   ```bash
+   git clone https://github.com/danayim03/bookhub.git
+   cd bookhub
+   npm install
+   ```
+
+2. **Environment variables**
+
+   In the project root, create `.env.local` and add:
+
+   | Variable | Description |
+   |----------|-------------|
+   | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | From Clerk Dashboard → API Keys (publishable) |
+   | `CLERK_SECRET_KEY` | From Clerk Dashboard → API Keys (secret) |
+   | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
+   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon/public key |
+   | `NEXT_PUBLIC_GOOGLE_BOOKS_API_KEY` | Google Books API key |
+
+   Do not commit `.env.local`; it is ignored by git.
+
+3. **Run locally**
+
+   ```bash
+   npm run dev
+   ```
+
+   Build for production:
+
+   ```bash
+   npm run build
+   npm start
+   ```
+
+### Deploy (e.g. Vercel)
+
+- Set the same environment variables in your host’s dashboard (e.g. Vercel → Settings → Environment Variables).
+- For Clerk, use production keys and add your production domain and redirect URLs in the Clerk Dashboard.
+- Point the production branch in your host (e.g. Vercel “Production Branch”) to the branch you use for releases (e.g. `main` or `mimi`).
+
+---
+
+## Project hygiene
+
+### Contributing
+
+This project does not accept external contributions (code, pull requests, or contributed patches). The repository is maintained for personal use and reference.
+
+### License
+
+Licensing terms are not yet specified. A `LICENSE` file may be added to the repository. Until then, assume all rights reserved.
+
+
+---
+
+## Tech stack
+
+- **Framework:** [Next.js](https://nextjs.org/) 16 (App Router)
+- **UI:** [React](https://react.dev/) 19, [Tailwind CSS](https://tailwindcss.com/) 4
+- **Auth:** [Clerk](https://clerk.com)
+- **Data:** [Supabase](https://supabase.com), [Google Books API](https://developers.google.com/books)
+- **Data fetching:** [SWR](https://swr.vercel.app/) (client), server `fetch` for SSR
+
+
