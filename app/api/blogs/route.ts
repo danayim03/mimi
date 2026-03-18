@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
             published: published === true,
         };
 
-        writeBlog(slug, frontmatter, String(content).trim());
+        await writeBlog(slug, frontmatter, String(content).trim());
 
         return NextResponse.json({ slug });
     } catch (e) {

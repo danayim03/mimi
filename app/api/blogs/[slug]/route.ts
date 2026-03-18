@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { isAdmin } from "@/lib/admin";
-import { getBlogRaw, writeBlog } from "@/lib/blogs";
-
-const BLOGS_DIR = path.join(process.cwd(), "content/blogs");
+import { deleteBlog, getBlogRaw, writeBlog } from "@/lib/blogs";
 
 export async function DELETE(
     _req: NextRequest,
@@ -16,13 +12,12 @@ export async function DELETE(
         }
 
         const { slug } = await params;
-        const filePath = path.join(BLOGS_DIR, `${slug}.md`);
-
-        if (!fs.existsSync(filePath)) {
+        const existing = await getBlogRaw(slug);
+        if (!existing) {
             return NextResponse.json({ error: "Blog not found" }, { status: 404 });
         }
 
-        fs.unlinkSync(filePath);
+        await deleteBlog(slug);
         return NextResponse.json({ success: true });
     } catch (e) {
         console.error("DELETE /api/blogs/[slug] error:", e);
@@ -40,7 +35,7 @@ export async function PUT(
         }
 
         const { slug } = await params;
-        const existing = getBlogRaw(slug);
+        const existing = await getBlogRaw(slug);
 
         if (!existing) {
             return NextResponse.json({ error: "Blog not found" }, { status: 404 });
@@ -64,7 +59,7 @@ export async function PUT(
             published: published === true,
         };
 
-        writeBlog(slug, frontmatter, String(content).trim());
+        await writeBlog(slug, frontmatter, String(content).trim());
 
         return NextResponse.json({ slug });
     } catch (e) {

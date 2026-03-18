@@ -4,7 +4,7 @@ import { isAdmin } from "@/lib/admin";
 
 export default async function BlogsPage() {
     const admin = await isAdmin();
-    const blogs = getBlogs(admin);
+    const blogs = await getBlogs(admin);
 
     return (
         <main className="px-4 sm:px-8 pb-2">

@@ -3,8 +3,8 @@ import { getBlogs } from "@/lib/blogs";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mimireads.vercel.app";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const blogs = getBlogs(false);
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const blogs = await getBlogs(false);
     const blogEntries: MetadataRoute.Sitemap = blogs.map((b) => ({
         url: `${baseUrl}/blogs/${b.slug}`,
         lastModified: new Date(b.date),

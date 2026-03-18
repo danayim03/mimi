@@ -13,7 +13,7 @@ export default async function EditBlogPage({ params }: EditPageProps) {
     }
 
     const { slug } = await params;
-    const raw = getBlogRaw(slug);
+    const raw = await getBlogRaw(slug);
 
     if (!raw) {
         redirect("/blogs");
