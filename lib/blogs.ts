@@ -68,7 +68,7 @@ export function writeBlog(
     content: string
 ) {
     const filePath = path.join(BLOGS_DIR, `${slug}.md`);
-    const fm = matter.stringify(content, frontmatter, { lineWidth: -1 });
+    const fm = matter.stringify(content, frontmatter);
     fs.mkdirSync(BLOGS_DIR, { recursive: true });
     fs.writeFileSync(filePath, fm, "utf8");
 }
