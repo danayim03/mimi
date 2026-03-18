@@ -78,11 +78,11 @@ const NavBar = () => {
 
     return (
         <header
-            className={`w-full fixed top-0 z-10 px-4 sm:px-8 pt-4 transition-all duration-300 ease-in-out
+            className={`w-full fixed top-0 z-10 px-4 sm:px-8 pt-4 bg-white transition-all duration-300 ease-in-out
                 ${visible ? "translate-y-0" : "-translate-y-full"}
             `}
         >
-            <nav className={`max-width mx-auto flex-between px-6 py-3 rounded-t-2xl transition-all duration-300
+            <nav className={`w-full flex-between px-6 py-3 rounded-t-2xl transition-all duration-300
                 ${atTop
                     ? "bg-primary-white shadow-none"
                     : "bg-primary-white/95 backdrop-blur-sm shadow-sm"
