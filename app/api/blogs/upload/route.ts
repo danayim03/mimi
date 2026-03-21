@@ -1,16 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import fs from "fs";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
 import { isAdmin } from "@/lib/admin";
+import { getSupabaseAdmin } from "@/utils/supabase-server";
 
-const BLOGS_IMAGES_DIR = path.join(process.cwd(), "public/blogs-images");
+const BUCKET = "blogs-images";
 const ALLOWED = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
 
 export async function POST(req: NextRequest) {
     try {
         if (!(await isAdmin())) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+        }
+
+        const admin = getSupabaseAdmin();
+        if (!admin) {
+            return NextResponse.json(
+                { error: "Storage not configured. Add SUPABASE_SERVICE_ROLE_KEY." },
+                { status: 503 }
+            );
         }
 
         const formData = await req.formData();
@@ -38,20 +44,37 @@ export async function POST(req: NextRequest) {
                   : "webp";
         const base =
             file.name.replace(/\.[^.]+$/, "").replace(/[^a-z0-9-_]/gi, "-") || "image";
-        let filename = `${base}.${ext}`;
-        let i = 0;
-        while (fs.existsSync(path.join(BLOGS_IMAGES_DIR, filename))) {
-            filename = `${base}-${++i}.${ext}`;
-        }
+        const filename = `${base}-${Date.now()}.${ext}`;
 
-        await mkdir(BLOGS_IMAGES_DIR, { recursive: true });
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
-        const filePath = path.join(BLOGS_IMAGES_DIR, filename);
-        await writeFile(filePath, buffer);
 
-        const publicPath = `/blogs-images/${filename}`;
-        return NextResponse.json({ path: publicPath });
+        const { data: uploadData, error: uploadError } = await admin.storage
+            .from(BUCKET)
+            .upload(filename, buffer, {
+                contentType: file.type,
+                upsert: false,
+            });
+
+        if (uploadError) {
+            if (uploadError.message?.includes("Bucket not found") || uploadError.message?.includes("does not exist")) {
+                return NextResponse.json(
+                    {
+                        error:
+                            "Storage bucket 'blogs-images' not found. Create it in Supabase Dashboard → Storage.",
+                    },
+                    { status: 503 }
+                );
+            }
+            console.error("Upload error:", uploadError);
+            return NextResponse.json(
+                { error: uploadError.message ?? "Upload failed" },
+                { status: 500 }
+            );
+        }
+
+        const { data: urlData } = admin.storage.from(BUCKET).getPublicUrl(uploadData.path);
+        return NextResponse.json({ path: urlData.publicUrl });
     } catch (e) {
         console.error("POST /api/blogs/upload error:", e);
         return NextResponse.json({ error: "Upload failed" }, { status: 500 });

@@ -66,15 +66,9 @@ export default async function BlogsPage() {
                                     <p className="font-swiss text-xs text-black/70 leading-relaxed line-clamp-3">
                                         {blog.description}
                                     </p>
-                                    <div className="mt-2 flex items-center justify-between text-[0.65rem] font-swiss text-black/60">
-                                        <div className="flex gap-1">
-                                            <span className="font-semibold">Author</span>
-                                            <span>Dana Yim</span>
-                                        </div>
-                                        <div className="flex gap-1">
-                                            <span className="font-semibold">Duration</span>
-                                            <span>10 min</span>
-                                        </div>
+                                    <div className="mt-2 text-[0.65rem] font-swiss text-black/60">
+                                        <span className="font-semibold">Author</span>{" "}
+                                        <span>Dana Yim</span>
                                     </div>
                                 </div>
                             </Link>
