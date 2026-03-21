@@ -1,8 +1,12 @@
 /**
  * One-time script to migrate existing markdown blogs into Supabase.
- * Run: npx tsx scripts/seed-blogs.ts
+ * Run: npm run seed:blogs
  * Requires: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, and content/blogs/*.md
  */
+import { config } from "dotenv";
+
+config({ path: ".env.local" });
+
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
